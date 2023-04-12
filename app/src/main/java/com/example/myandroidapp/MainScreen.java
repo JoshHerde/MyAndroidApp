@@ -18,7 +18,8 @@ public class MainScreen extends AppCompatActivity {
         termsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( );
+                Intent intent = new Intent( MainScreen.this, TermList.class);
+                MainScreen.this.startActivity(intent);
             }
         });
 
