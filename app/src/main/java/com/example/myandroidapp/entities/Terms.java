@@ -18,6 +18,7 @@ public class Terms {
     @ColumnInfo(name = "end_date")
     private Date termEndDate;
 
+    // constructor
     public Terms(int termID, String termName, Date termStartDate, Date termEndDate) {
         this.termID = termID;
         this.termName = termName;

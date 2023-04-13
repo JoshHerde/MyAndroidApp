@@ -15,7 +15,7 @@ public class Assessments {
     @ColumnInfo(name = "name")
     private String assessmentName;
     @ColumnInfo(name = "type")
-    private Date assessmentType;
+    private String assessmentType;
     @ColumnInfo(name = "start_date")
     private Date assessmentStartDate;
     @ColumnInfo(name = "end_date")
@@ -27,7 +27,7 @@ public class Assessments {
     @ColumnInfo(name = "course_id")
     private int courseID;
 
-    public Assessments(int assessmentID, String assessmentName, Date assessmentType, Date assessmentStartDate,
+    public Assessments(int assessmentID, String assessmentName, String assessmentType, Date assessmentStartDate,
                        Date assessmentEndDate, Date startAlert, Date endAlert, int courseID) {
         this.assessmentID = assessmentID;
         this.assessmentName = assessmentName;
@@ -40,7 +40,7 @@ public class Assessments {
     }
 
     @Ignore
-    public Assessments(String assessmentName, Date assessmentType, Date assessmentStartDate,
+    public Assessments(String assessmentName, String assessmentType, Date assessmentStartDate,
                        Date assessmentEndDate, Date startAlert, Date endAlert, int courseID) {
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
@@ -71,11 +71,11 @@ public class Assessments {
         this.assessmentName = assessmentName;
     }
 
-    public Date getAssessmentType() {
+    public String getAssessmentType() {
         return assessmentType;
     }
 
-    public void setAssessmentType(Date assessmentType) {
+    public void setAssessmentType(String assessmentType) {
         this.assessmentType = assessmentType;
     }
 
