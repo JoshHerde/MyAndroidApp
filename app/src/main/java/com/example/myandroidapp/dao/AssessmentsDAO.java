@@ -8,13 +8,12 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.myandroidapp.entities.Assessments;
-import com.example.myandroidapp.entities.Courses;
 
 import java.util.List;
 
 @Dao
 public interface AssessmentsDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Assessments assessments);
 
     @Update
@@ -30,8 +29,8 @@ public interface AssessmentsDAO {
     int getCount();
 
     @Query("SELECT * FROM assessments WHERE assessmentID = :assessmentID")
-    Assessments getByID(int assessmentID);
+    Assessments getAssessmentByID(int assessmentID);
 
     @Query("SELECT * FROM assessments WHERE course_id = :courseID")
-    List<Assessments> getAssociatedAssessments(int courseID);
+    List<Assessments> getAssessmentByCourse(int courseID);
 }

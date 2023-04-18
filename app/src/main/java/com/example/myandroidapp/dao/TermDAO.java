@@ -13,7 +13,7 @@ import java.util.List;
 
 @Dao
 public interface TermDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Terms terms);
 
     @Update
@@ -29,5 +29,5 @@ public interface TermDAO {
     int getCount();
 
     @Query("SELECT * FROM terms WHERE termID = :termID")
-    Terms getByID(int termID);
+    Terms getTermByID(int termID);
 }

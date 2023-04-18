@@ -22,7 +22,7 @@ public abstract class AppDatabaseBuilder extends RoomDatabase {
 
     private static volatile AppDatabaseBuilder INSTANCE;
 
-    static AppDatabaseBuilder getDatabase(final Context context){
+    public static AppDatabaseBuilder getDatabase(final Context context){
         if(INSTANCE == null) {
             synchronized (AppDatabaseBuilder.class){
                 if(INSTANCE == null){

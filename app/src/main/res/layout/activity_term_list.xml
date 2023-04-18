@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UI.TermList">
 
-    <EditText
-        android:id="@+id/termEndDate"
-        android:layout_width="131dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="68dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/FABAddTerm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/termStartDate"
-        app:layout_constraintTop_toBottomOf="@+id/termList"
-        app:layout_constraintVertical_bias="0.0" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABAddTerm"
         android:layout_width="wrap_content"
@@ -34,56 +19,17 @@
         app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@drawable/ic_baseline_add_24" />
 
-    <ScrollView
-        android:id="@+id/termList"
-        android:layout_width="418dp"
-        android:layout_height="109dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/termRecyclerView"
+        android:layout_width="409dp"
+        android:layout_height="657dp"
         android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-    </ScrollView>
-
-    <EditText
-        android:id="@+id/termStartDate"
-        android:layout_width="131dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="54dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/assocCourseList"
-        app:layout_constraintEnd_toStartOf="@+id/termEndDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termList"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ScrollView
-        android:id="@+id/assocCourseList"
-        android:layout_width="413dp"
-        android:layout_height="384dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/FABAddTerm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termEndDate">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
