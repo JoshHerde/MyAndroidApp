@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "courses", foreignKeys = @ForeignKey(entity = Terms.class, parentColumns = "courseID", childColumns = "term_id", onDelete = ForeignKey.CASCADE))
+@Entity(tableName = "courses", foreignKeys = @ForeignKey(entity = Terms.class, parentColumns = "ID", childColumns = "term_id", onDelete = ForeignKey.CASCADE))
 public class Courses {
     @PrimaryKey(autoGenerate = true)
-    private int courseID;
+    private int ID;
     @ColumnInfo(name = "name")
     private String courseName;
     @ColumnInfo(name = "start_date")
@@ -36,9 +36,9 @@ public class Courses {
     private int termID;
 
     // constructor
-    public Courses(int courseID, String courseName, Date courseStartDate, Date courseEndDate, String courseStatus,
+    public Courses(int ID, String courseName, Date courseStartDate, Date courseEndDate, String courseStatus,
                    String ciName, String ciPhone, String ciEmail, String notes, Date startAlert, Date endAlert, int termID) {
-        this.courseID = courseID;
+        this.ID = ID;
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
         this.courseEndDate = courseEndDate;
@@ -72,12 +72,12 @@ public class Courses {
     public Courses() {
     }
 
-    public int getCourseID() {
-        return courseID;
+    public int getID() {
+        return ID;
     }
 
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getCourseName() {

@@ -22,12 +22,12 @@ public interface TermDAO {
     @Delete
     void delete(Terms terms);
 
-    @Query("SELECT * FROM terms ORDER BY termID ASC")
+    @Query("SELECT * FROM terms ORDER BY ID ASC")
     List<Terms> getAllTerms();
 
     @Query("SELECT COUNT(*) FROM terms")
     int getCount();
 
-    @Query("SELECT * FROM terms WHERE termID = :termID")
+    @Query("SELECT * FROM terms WHERE ID = :termID")
     Terms getTermByID(int termID);
 }

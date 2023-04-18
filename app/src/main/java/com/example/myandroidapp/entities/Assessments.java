@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "assessments", foreignKeys = @ForeignKey(entity = Courses.class, parentColumns = "assessmentID", childColumns = "course_id", onDelete = ForeignKey.CASCADE))
+@Entity(tableName = "assessments", foreignKeys = @ForeignKey(entity = Courses.class, parentColumns = "ID", childColumns = "course_id", onDelete = ForeignKey.CASCADE))
 public class Assessments {
     @PrimaryKey(autoGenerate = true)
-    private int assessmentID;
+    private int ID;
     @ColumnInfo(name = "name")
     private String assessmentName;
     @ColumnInfo(name = "type")
@@ -27,9 +27,9 @@ public class Assessments {
     @ColumnInfo(name = "course_id")
     private int courseID;
 
-    public Assessments(int assessmentID, String assessmentName, String assessmentType, Date assessmentStartDate,
+    public Assessments(int ID, String assessmentName, String assessmentType, Date assessmentStartDate,
                        Date assessmentEndDate, Date startAlert, Date endAlert, int courseID) {
-        this.assessmentID = assessmentID;
+        this.ID = ID;
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentStartDate = assessmentStartDate;
@@ -55,12 +55,12 @@ public class Assessments {
     public Assessments() {
     }
 
-    public int getAssessmentID() {
-        return assessmentID;
+    public int getID() {
+        return ID;
     }
 
-    public void setAssessmentID(int assessmentID) {
-        this.assessmentID = assessmentID;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getAssessmentName() {

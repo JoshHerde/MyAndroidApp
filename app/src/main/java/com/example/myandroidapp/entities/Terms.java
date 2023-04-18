@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity (tableName = "terms")
 public class Terms {
     @PrimaryKey(autoGenerate = true)
-    private int termID;
+    private int ID;
     @ColumnInfo(name = "term_name")
     private String termName;
     @ColumnInfo(name = "start_date")
@@ -19,8 +19,8 @@ public class Terms {
     private Date termEndDate;
 
     // constructor
-    public Terms(int termID, String termName, Date termStartDate, Date termEndDate) {
-        this.termID = termID;
+    public Terms(int ID, String termName, Date termStartDate, Date termEndDate) {
+        this.ID = ID;
         this.termName = termName;
         this.termStartDate = termStartDate;
         this.termEndDate = termEndDate;
@@ -37,12 +37,12 @@ public class Terms {
     public Terms() {
     }
 
-    public int getTermID() {
-        return termID;
+    public int getID() {
+        return ID;
     }
 
-    public void setTermID(int termID) {
-        this.termID = termID;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getTermName() {

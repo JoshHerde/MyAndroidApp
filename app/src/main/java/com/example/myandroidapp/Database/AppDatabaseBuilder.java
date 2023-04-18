@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.example.myandroidapp.dao.AssessmentsDAO;
 import com.example.myandroidapp.dao.CoursesDAO;
@@ -14,7 +16,8 @@ import com.example.myandroidapp.entities.Assessments;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 
-@Database(entities = {Terms.class, Courses.class, Assessments.class}, version = 2, exportSchema = false)
+@Database(entities = {Terms.class, Courses.class, Assessments.class}, version = 3, exportSchema = false)
+@TypeConverters({Converter.class})
 public abstract class AppDatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
     public abstract CoursesDAO coursesDAO();

@@ -22,13 +22,13 @@ public interface AssessmentsDAO {
     @Delete
     void delete(Assessments assessments);
 
-    @Query("SELECT * FROM assessments ORDER BY assessmentID ASC")
+    @Query("SELECT * FROM assessments ORDER BY ID ASC")
     List<Assessments> getAllAssessments();
 
     @Query("SELECT COUNT(*) FROM assessments")
     int getCount();
 
-    @Query("SELECT * FROM assessments WHERE assessmentID = :assessmentID")
+    @Query("SELECT * FROM assessments WHERE ID = :assessmentID")
     Assessments getAssessmentByID(int assessmentID);
 
     @Query("SELECT * FROM assessments WHERE course_id = :courseID")
