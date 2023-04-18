@@ -167,4 +167,5 @@ public class Courses {
     public void setTermID(int termID) {
         this.termID = termID;
     }
+
 }
