@@ -15,12 +15,12 @@ public class Terms {
     @ColumnInfo(name = "term_name")
     private String termName;
     @ColumnInfo(name = "start_date")
-    private Date termStartDate;
+    private String termStartDate;
     @ColumnInfo(name = "end_date")
-    private Date termEndDate;
+    private String termEndDate;
 
     // constructor
-    public Terms(int ID, String termName, Date termStartDate, Date termEndDate) {
+    public Terms(int ID, String termName, String termStartDate, String termEndDate) {
         this.ID = ID;
         this.termName = termName;
         this.termStartDate = termStartDate;
@@ -28,7 +28,7 @@ public class Terms {
     }
 
     @Ignore
-    public Terms(String termName, Date termStartDate, Date termEndDate) {
+    public Terms(String termName, String termStartDate, String termEndDate) {
         this.termName = termName;
         this.termStartDate = termStartDate;
         this.termEndDate = termEndDate;
@@ -54,19 +54,19 @@ public class Terms {
         this.termName = termName;
     }
 
-    public Date getTermStartDate() {
+    public String getTermStartDate() {
         return termStartDate;
     }
 
-    public void setTermStartDate(Date termStartDate) {
+    public void setTermStartDate(String termStartDate) {
         this.termStartDate = termStartDate;
     }
 
-    public Date getTermEndDate() {
+    public String getTermEndDate() {
         return termEndDate;
     }
 
-    public void setTermEndDate(Date termEndDate) {
+    public void setTermEndDate(String termEndDate) {
         this.termEndDate = termEndDate;
     }
 }

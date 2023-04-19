@@ -12,6 +12,20 @@
         android:theme="@style/Theme.MyAndroidApp"
         tools:targetApi="31">
         <activity
+            android:name=".CourseDetails"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CourseList"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UI.TermAdd"
             android:exported="false">
             <meta-data
