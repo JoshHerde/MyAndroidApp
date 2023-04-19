@@ -12,28 +12,28 @@
         android:theme="@style/Theme.MyAndroidApp"
         tools:targetApi="31">
         <activity
-            android:name=".CourseDetails"
+            android:name=".UI.AssessmentsList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CourseList"
+            android:name=".UI.AssessmentDetails"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.TermAdd"
+            android:name=".UI.CourseDetails"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.TermEdit"
+            android:name=".UI.CourseList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -42,6 +42,7 @@
         <activity
             android:name=".UI.TermDetails"
             android:exported="false"
+            android:label="Term Details"
             android:parentActivityName=".UI.TermList">
             <meta-data
                 android:name="android.app.lib_name"
@@ -50,6 +51,7 @@
         <activity
             android:name=".UI.TermList"
             android:exported="false"
+            android:label="Terms List"
             android:parentActivityName=".UI.MainScreen">
             <meta-data
                 android:name="android.app.lib_name"

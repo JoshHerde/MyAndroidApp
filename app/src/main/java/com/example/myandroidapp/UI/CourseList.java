@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -30,5 +33,14 @@ public class CourseList extends AppCompatActivity {
         repository = new Repository(getApplication());
         List<Courses> courses = repository.getAllCourses();
         courseListAdapter.setCourses(courses);
+
+        FloatingActionButton FABAddCourse = findViewById(R.id.FABAddCourse);
+        FABAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CourseList.this, CourseDetails.class);
+                CourseList.this.startActivity(intent);
+            }
+        });
     }
 }

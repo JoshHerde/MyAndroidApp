@@ -11,14 +11,18 @@
         android:layout_height="731dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="-1dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <EditText
-            android:id="@+id/termNameEdit"
+            android:id="@+id/termName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            tools:autofillHints="Term Name" />
+            android:autofillHints="Term Name"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,22 +35,22 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/termStartDateEdit"
+                android:id="@+id/termStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="Start Date"
                 android:ems="10"
-                android:inputType="none"
-                tools:autofillHints="Start Date" />
+                android:inputType="none" />
 
             <EditText
-                android:id="@+id/termEndDateEdit"
+                android:id="@+id/termEndDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="End Date"
                 android:ems="10"
-                android:inputType="none"
-                tools:autofillHints="End Date" />
+                android:inputType="none" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -65,6 +69,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CANCEL" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,7 +46,7 @@ public class TermList extends AppCompatActivity {
         FABAddTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TermList.this, TermAdd.class);
+                Intent intent = new Intent(TermList.this, TermDetails.class);
                 TermList.this.startActivity(intent);
             }
         });
