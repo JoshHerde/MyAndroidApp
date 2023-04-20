@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Database;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,12 +15,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.myandroidapp.Database.AppDatabaseBuilder;
+import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TermDetails extends AppCompatActivity {
