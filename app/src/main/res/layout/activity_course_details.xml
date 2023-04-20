@@ -7,8 +7,8 @@
     tools:context=".UI.CourseDetails">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="Course Name"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="Course Name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +45,8 @@
                 android:layout_weight="1"
                 android:autofillHints="Start Date"
                 android:ems="10"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="Start Date" />
 
             <EditText
                 android:id="@+id/courseEndDate"
@@ -53,16 +55,18 @@
                 android:layout_weight="1"
                 android:autofillHints="End Date"
                 android:ems="10"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="End Date" />
         </LinearLayout>
 
         <EditText
             android:id="@+id/courseStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="In Progress, Completed, Dropped, or Plan to Take"
+            android:autofillHints="Course Status"
             android:ems="10"
-            android:inputType="none" />
+            android:inputType="none"
+            android:text="Course Status" />
 
         <EditText
             android:id="@+id/ciName"
@@ -70,7 +74,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="Instructors Name"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="Instructor Name" />
 
         <EditText
             android:id="@+id/ciPhone"
@@ -78,7 +83,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="Instructors Phone"
             android:ems="10"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:text="Instructor Phone" />
 
         <EditText
             android:id="@+id/ciEmail"
@@ -86,7 +92,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="Instructors Email"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="Instructor Email" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,7 +107,8 @@
                 android:layout_weight="1"
                 android:autofillHints="Start Alert"
                 android:ems="10"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="Start Alert" />
 
             <EditText
                 android:id="@+id/courseEndAlert"
@@ -109,7 +117,8 @@
                 android:layout_weight="1"
                 android:autofillHints="End Alert"
                 android:ems="10"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="End Alert" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -124,7 +133,8 @@
             android:autofillHints="Notes:"
             android:ems="10"
             android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:text="Notes" />
 
         <Button
             android:id="@+id/courseSaveButton"

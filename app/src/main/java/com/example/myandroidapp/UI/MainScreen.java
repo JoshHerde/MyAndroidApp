@@ -27,6 +27,24 @@ public class MainScreen extends AppCompatActivity {
                 MainScreen.this.startActivity(intent);
             }
         });
+
+        Button coursesButton = findViewById(R.id.coursesButton);
+        coursesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainScreen.this, CourseList.class);
+                MainScreen.this.startActivity(intent);
+            }
+        });
+
+        Button assessmentsButton = findViewById(R.id.assessmentsButton);
+        assessmentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainScreen.this, AssessmentsList.class);
+                MainScreen.this.startActivity(intent);
+            }
+        });
     }
 /*
     @Override

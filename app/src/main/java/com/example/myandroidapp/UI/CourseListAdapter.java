@@ -49,7 +49,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
                     intent.putExtra("endAlert", current.getEndAlert());
                     intent.putExtra("termID", current.getTermID());
                     context.startActivity(intent);
-
                 }
             });
         }
@@ -75,7 +74,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
         } else {
             holder.courseItemView.setText("No Course Name");
         }
-
     }
 
     @Override

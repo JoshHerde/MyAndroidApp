@@ -6,4 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".UI.AssessmentDetails">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <EditText
+            android:id="@+id/assessmentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Assessment Name"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Assessment Name" />
+
+        <EditText
+            android:id="@+id/assessmentType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Assessment Type"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Assessment Type" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/assessmentStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="Start Date"
+                android:ems="10"
+                android:inputType="none"
+                android:text="Start Date" />
+
+            <EditText
+                android:id="@+id/assessmentEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="End Date"
+                android:ems="10"
+                android:inputType="none"
+                android:text="End Date" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/assessmentStartAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="Start Alert"
+                android:ems="10"
+                android:inputType="none"
+                android:text="Start Alert" />
+
+            <EditText
+                android:id="@+id/assessmentEndAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="End Alert"
+                android:ems="10"
+                android:inputType="none"
+                android:text="End Alert" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/assessmentSaveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE" />
+
+        <Button
+            android:id="@+id/assessmentCancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANCEL" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
