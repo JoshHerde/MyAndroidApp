@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class AssessmentsList extends AppCompatActivity {
+public class AssessmentList extends AppCompatActivity {
 
     private Repository repository;
 
@@ -36,8 +36,8 @@ public class AssessmentsList extends AppCompatActivity {
         FABAddAssessment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
-                AssessmentsList.this.startActivity(intent);
+                Intent intent = new Intent(AssessmentList.this, AssessmentDetails.class);
+                AssessmentList.this.startActivity(intent);
             }
         });
     }

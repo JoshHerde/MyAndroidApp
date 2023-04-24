@@ -12,7 +12,7 @@
         android:theme="@style/Theme.MyAndroidApp"
         tools:targetApi="31">
         <activity
-            android:name=".UI.AssessmentsList"
+            android:name=".UI.AssessmentList"
             android:exported="false"
             android:label="Assessments List"
             android:parentActivityName=".UI.MainScreen">
@@ -24,7 +24,7 @@
             android:name=".UI.AssessmentDetails"
             android:exported="false"
             android:label="Assessment Details"
-            android:parentActivityName=".UI.AssessmentsList">
+            android:parentActivityName=".UI.AssessmentList">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -17,18 +17,18 @@ public class Assessments {
     @ColumnInfo(name = "type")
     private String assessmentType;
     @ColumnInfo(name = "start_date")
-    private Date assessmentStartDate;
+    private String assessmentStartDate;
     @ColumnInfo(name = "end_date")
-    private Date assessmentEndDate;
+    private String assessmentEndDate;
     @ColumnInfo(name = "start_alert")
-    private Date startAlert;
+    private String startAlert;
     @ColumnInfo(name = "end_alert")
-    private Date endAlert;
+    private String endAlert;
     @ColumnInfo(name = "course_id")
     private int courseID;
 
-    public Assessments(int ID, String assessmentName, String assessmentType, Date assessmentStartDate,
-                       Date assessmentEndDate, Date startAlert, Date endAlert, int courseID) {
+    public Assessments(int ID, String assessmentName, String assessmentType, String assessmentStartDate,
+                       String assessmentEndDate, String startAlert, String endAlert, int courseID) {
         this.ID = ID;
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
@@ -40,8 +40,8 @@ public class Assessments {
     }
 
     @Ignore
-    public Assessments(String assessmentName, String assessmentType, Date assessmentStartDate,
-                       Date assessmentEndDate, Date startAlert, Date endAlert, int courseID) {
+    public Assessments(String assessmentName, String assessmentType, String assessmentStartDate,
+                       String assessmentEndDate, String startAlert, String endAlert, int courseID) {
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentStartDate = assessmentStartDate;
@@ -79,35 +79,35 @@ public class Assessments {
         this.assessmentType = assessmentType;
     }
 
-    public Date getAssessmentStartDate() {
+    public String getAssessmentStartDate() {
         return assessmentStartDate;
     }
 
-    public void setAssessmentStartDate(Date assessmentStartDate) {
+    public void setAssessmentStartDate(String assessmentStartDate) {
         this.assessmentStartDate = assessmentStartDate;
     }
 
-    public Date getAssessmentEndDate() {
+    public String getAssessmentEndDate() {
         return assessmentEndDate;
     }
 
-    public void setAssessmentEndDate(Date assessmentEndDate) {
+    public void setAssessmentEndDate(String assessmentEndDate) {
         this.assessmentEndDate = assessmentEndDate;
     }
 
-    public Date getStartAlert() {
+    public String getStartAlert() {
         return startAlert;
     }
 
-    public void setStartAlert(Date startAlert) {
+    public void setStartAlert(String startAlert) {
         this.startAlert = startAlert;
     }
 
-    public Date getEndAlert() {
+    public String getEndAlert() {
         return endAlert;
     }
 
-    public void setEndAlert(Date endAlert) {
+    public void setEndAlert(String endAlert) {
         this.endAlert = endAlert;
     }
 

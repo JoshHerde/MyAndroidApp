@@ -14,6 +14,7 @@ import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseList extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class CourseList extends AppCompatActivity {
         repository = new Repository(getApplication());
         List<Courses> courses = repository.getAllCourses();
         courseListAdapter.setCourses(courses);
+
 
         FloatingActionButton FABAddCourse = findViewById(R.id.FABAddCourse);
         FABAddCourse.setOnClickListener(new View.OnClickListener() {

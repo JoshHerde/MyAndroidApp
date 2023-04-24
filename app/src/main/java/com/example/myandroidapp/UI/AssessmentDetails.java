@@ -28,7 +28,7 @@ public class AssessmentDetails extends AppCompatActivity {
         assessmentCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AssessmentDetails.this, AssessmentsList.class);
+                Intent intent = new Intent(AssessmentDetails.this, AssessmentList.class);
                 AssessmentDetails.this.startActivity(intent);
             }
         });

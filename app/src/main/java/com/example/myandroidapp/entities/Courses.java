@@ -15,9 +15,9 @@ public class Courses {
     @ColumnInfo(name = "name")
     private String courseName;
     @ColumnInfo(name = "start_date")
-    private Date courseStartDate;
+    private String courseStartDate;
     @ColumnInfo(name = "end_date")
-    private Date courseEndDate;
+    private String courseEndDate;
     @ColumnInfo(name = "status")
     private String courseStatus;
     @ColumnInfo(name = "ci_name")
@@ -29,15 +29,15 @@ public class Courses {
     @ColumnInfo(name = "notes")
     private String notes;
     @ColumnInfo(name = "start_alert")
-    private Date startAlert;
+    private String startAlert;
     @ColumnInfo(name = "end_alert")
-    private Date endAlert;
+    private String endAlert;
     @ColumnInfo(name = "term_id")
     private int termID;
 
     // constructor
-    public Courses(int ID, String courseName, Date courseStartDate, Date courseEndDate, String courseStatus,
-                   String ciName, String ciPhone, String ciEmail, String notes, Date startAlert, Date endAlert, int termID) {
+    public Courses(int ID, String courseName, String courseStartDate, String courseEndDate, String courseStatus,
+                   String ciName, String ciPhone, String ciEmail, String notes, String startAlert, String endAlert, int termID) {
         this.ID = ID;
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
@@ -53,8 +53,8 @@ public class Courses {
     }
 
     @Ignore
-    public Courses(String courseName, Date courseStartDate, Date courseEndDate, String courseStatus,
-                   String ciName, String ciPhone, String ciEmail, String notes, Date startAlert, Date endAlert, int termID) {
+    public Courses(String courseName, String courseStartDate, String courseEndDate, String courseStatus,
+                   String ciName, String ciPhone, String ciEmail, String notes, String startAlert, String endAlert, int termID) {
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
         this.courseEndDate = courseEndDate;
@@ -88,19 +88,19 @@ public class Courses {
         this.courseName = courseName;
     }
 
-    public Date getCourseStartDate() {
+    public String getCourseStartDate() {
         return courseStartDate;
     }
 
-    public void setCourseStartDate(Date courseStartDate) {
+    public void setCourseStartDate(String courseStartDate) {
         this.courseStartDate = courseStartDate;
     }
 
-    public Date getCourseEndDate() {
+    public String getCourseEndDate() {
         return courseEndDate;
     }
 
-    public void setCourseEndDate(Date courseEndDate) {
+    public void setCourseEndDate(String courseEndDate) {
         this.courseEndDate = courseEndDate;
     }
 
@@ -144,19 +144,19 @@ public class Courses {
         this.notes = notes;
     }
 
-    public Date getStartAlert() {
+    public String getStartAlert() {
         return startAlert;
     }
 
-    public void setStartAlert(Date startAlert) {
+    public void setStartAlert(String startAlert) {
         this.startAlert = startAlert;
     }
 
-    public Date getEndAlert() {
+    public String getEndAlert() {
         return endAlert;
     }
 
-    public void setEndAlert(Date endAlert) {
+    public void setEndAlert(String endAlert) {
         this.endAlert = endAlert;
     }
 
