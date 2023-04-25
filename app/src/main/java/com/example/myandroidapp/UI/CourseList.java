@@ -45,4 +45,15 @@ public class CourseList extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Courses> courses = repository.getAllCourses();
+        RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
+        final CourseListAdapter courseListAdapter = new CourseListAdapter(this);
+        recyclerView.setAdapter(courseListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        courseListAdapter.setCourses(courses);
+    }
 }

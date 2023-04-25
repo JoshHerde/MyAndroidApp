@@ -55,10 +55,10 @@ public class MainScreen extends AppCompatActivity {
         repository.insert(new Terms("Term 1", "10/10/2022", "03/10/2023"));
         repository.insert(new Terms("Term 2", "03/15/2023", "09/15/2023"));
 
-        repository.insert(new Courses("C196", "10/10/2022", "12/15/2022", "Complete", "Josh Herde", "111-111-1111", "jherde@wgu.edu", "test", "10/10/2022", "12/15/2022", 1));
+        repository.insert(new Courses("C196", "10/10/2022", "12/15/2022", "Complete", "Josh Herde", "111-111-1111", "jherde@wgu.edu", "test", 1));
 
-        repository.insert(new Assessments("Assessment 1", "Objective", "12/15/2022", "12/15/2022", "12/15/2022", "12/15/2022", 1));
-        repository.insert(new Assessments("Assessment 2", "Objective", "12/15/2022", "12/15/2022", "12/15/2022", "12/15/2022", 1));
+        repository.insert(new Assessments("Assessment 1", "Objective", "12/15/2022", "12/15/2022", 1));
+        repository.insert(new Assessments("Assessment 2", "Objective", "12/15/2022", "12/15/2022", 1));
     }
 /*
     @Override

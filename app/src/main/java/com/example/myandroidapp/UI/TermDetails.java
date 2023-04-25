@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +62,7 @@ public class TermDetails extends AppCompatActivity {
 
         views();
         intentValues();
+        listeners();
 
         termStartDate = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -103,39 +106,29 @@ public class TermDetails extends AppCompatActivity {
             if (courses.getTermID() == termID)
                 termCourses.add(courses);
         }
+        courseListAdapter.setCourses(termCourses);
 
         // Save Button
         Button termSaveButton = findViewById(R.id.termSaveButton);
         termSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals(""))
-                    //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals(""));
+                //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
 
-                    if(termID == -1) {
-                        terms = new Terms(
-                                0,
-                                editName.getText().toString(),
-                                editStartDate.getText().toString(),
-                                editEndDate.getText().toString()
-                        );
-                        repository.insert(terms);
-                        //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
-                    } else {
-                        terms = new Terms(termID,
-                                editName.getText().toString(),
-                                editStartDate.getText().toString(),
-                                editEndDate.getText().toString()
-                        );
-                        repository.update(terms);
-                        //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
-                    }
-
+                if(termID == -1) {
+                    terms = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
+                    repository.insert(terms);
+                    //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
+                } else {
+                    terms = new Terms(termID, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
+                    repository.update(terms);
+                    //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
+                }
+                finish();
             }
         });
 
-
-        // Cancel Button
         Button termCancelButton = findViewById(R.id.termCancelButton);
         termCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +137,6 @@ public class TermDetails extends AppCompatActivity {
                 TermDetails.this.startActivity(intent);
             }
         });
-
-
     }
 
     private void intentValues() {
@@ -180,20 +171,27 @@ public class TermDetails extends AppCompatActivity {
 
     }
 
-    @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_termdelete, menu);
         return true;
 
     }
 
-    /* @Override
+
     public boolean OnOptionsDeleteSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.termdelete:
+                for (Terms terms : repository.getAllTerms()) {
+                    if (terms.getID() == termID)
+                        terms = terms;
+                }
+        }
 
         return true;
     }
 
-     */
+
 
     @Override
     protected void onResume() {
@@ -201,5 +199,41 @@ public class TermDetails extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerViewForTerm);
         courseListAdapter = new CourseListAdapter(this);
         recyclerView.setAdapter(courseListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Courses> termCourses = new ArrayList<>();
+        for (Courses courses : repository.getAllCourses()) {
+            if (courses.getTermID() == termID)
+                termCourses.add(courses);
+        }
+        courseListAdapter.setCourses(termCourses);
     }
 }
+
+      /*
+                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals(""))
+                    //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+
+                    if(termID == -1) {
+                        terms = new Terms(
+                                0,
+                                editName.getText().toString(),
+                                editStartDate.getText().toString(),
+                                editEndDate.getText().toString()
+                        );
+                        repository.insert(terms);
+                        //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
+                    } else {
+                        terms = new Terms(
+                                termID,
+                                editName.getText().toString(),
+                                editStartDate.getText().toString(),
+                                editEndDate.getText().toString()
+                        );
+                        repository.update(terms);
+                        //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
+                    }
+                finish();
+            }
+        });
+
+        */

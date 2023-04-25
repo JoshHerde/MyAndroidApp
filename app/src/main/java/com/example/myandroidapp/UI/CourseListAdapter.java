@@ -45,8 +45,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
                     intent.putExtra("ciPhone", current.getCiPhone());
                     intent.putExtra("ciEmail", current.getCiEmail());
                     intent.putExtra("notes", current.getNotes());
-                    intent.putExtra("startAlert", current.getStartAlert());
-                    intent.putExtra("endAlert", current.getEndAlert());
                     intent.putExtra("termID", current.getTermID());
                     context.startActivity(intent);
                 }

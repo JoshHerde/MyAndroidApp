@@ -61,28 +61,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/assessmentStartAlert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autofillHints="Start Alert"
-                android:ems="10"
-                android:hint="Start Alert"
-                android:inputType="none" />
-
-            <EditText
-                android:id="@+id/assessmentEndAlert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autofillHints="End Alert"
-                android:ems="10"
-                android:hint="End Alert"
-                android:inputType="none" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <Button
             android:id="@+id/assessmentSaveButton"

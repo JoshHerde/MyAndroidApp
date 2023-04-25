@@ -20,34 +20,26 @@ public class Assessments {
     private String assessmentStartDate;
     @ColumnInfo(name = "end_date")
     private String assessmentEndDate;
-    @ColumnInfo(name = "start_alert")
-    private String startAlert;
-    @ColumnInfo(name = "end_alert")
-    private String endAlert;
     @ColumnInfo(name = "course_id")
     private int courseID;
 
     public Assessments(int ID, String assessmentName, String assessmentType, String assessmentStartDate,
-                       String assessmentEndDate, String startAlert, String endAlert, int courseID) {
+                       String assessmentEndDate, int courseID) {
         this.ID = ID;
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentStartDate = assessmentStartDate;
         this.assessmentEndDate = assessmentEndDate;
-        this.startAlert = startAlert;
-        this.endAlert = endAlert;
         this.courseID = courseID;
     }
 
     @Ignore
     public Assessments(String assessmentName, String assessmentType, String assessmentStartDate,
-                       String assessmentEndDate, String startAlert, String endAlert, int courseID) {
+                       String assessmentEndDate, int courseID) {
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentStartDate = assessmentStartDate;
         this.assessmentEndDate = assessmentEndDate;
-        this.startAlert = startAlert;
-        this.endAlert = endAlert;
         this.courseID = courseID;
     }
 
@@ -93,22 +85,6 @@ public class Assessments {
 
     public void setAssessmentEndDate(String assessmentEndDate) {
         this.assessmentEndDate = assessmentEndDate;
-    }
-
-    public String getStartAlert() {
-        return startAlert;
-    }
-
-    public void setStartAlert(String startAlert) {
-        this.startAlert = startAlert;
-    }
-
-    public String getEndAlert() {
-        return endAlert;
-    }
-
-    public void setEndAlert(String endAlert) {
-        this.endAlert = endAlert;
     }
 
     public int getCourseID() {

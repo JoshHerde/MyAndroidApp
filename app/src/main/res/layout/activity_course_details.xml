@@ -66,14 +66,10 @@
                     android:inputType="none" />
             </LinearLayout>
 
-            <EditText
+            <Spinner
                 android:id="@+id/courseStatus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="Course Status"
-                android:ems="10"
-                android:hint="Course Status"
-                android:inputType="none" />
+                android:layout_height="40dp" />
 
             <EditText
                 android:id="@+id/ciName"
@@ -102,31 +98,15 @@
                 android:hint="Instructor Email"
                 android:inputType="textEmailAddress" />
 
+            <Spinner
+                android:id="@+id/termSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/courseStartAlert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints="Start Alert"
-                    android:ems="10"
-                    android:hint="Start Alert"
-                    android:inputType="none" />
-
-                <EditText
-                    android:id="@+id/courseEndAlert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints="End Alert"
-                    android:ems="10"
-                    android:hint="End Alert"
-                    android:inputType="none" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/assessmentRecyclerView"

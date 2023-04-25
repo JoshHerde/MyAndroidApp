@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Assessments;
+import com.example.myandroidapp.entities.Courses;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -40,5 +41,16 @@ public class AssessmentList extends AppCompatActivity {
                 AssessmentList.this.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Assessments> assessments = repository.getAllAssessments();
+        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
+        final AssessmentListAdapter assessmentListAdapter = new AssessmentListAdapter(this);
+        recyclerView.setAdapter(assessmentListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        assessmentListAdapter.setAssessments(assessments);
     }
 }

@@ -51,4 +51,15 @@ public class TermList extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Terms> terms = repository.getAllTerms();
+        RecyclerView recyclerView = findViewById(R.id.termRecyclerView);
+        final TermListAdapter termListAdapter = new TermListAdapter(this);
+        recyclerView.setAdapter(termListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        termListAdapter.setTerms(terms);
+    }
 }

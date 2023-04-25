@@ -28,16 +28,12 @@ public class Courses {
     private String ciEmail;
     @ColumnInfo(name = "notes")
     private String notes;
-    @ColumnInfo(name = "start_alert")
-    private String startAlert;
-    @ColumnInfo(name = "end_alert")
-    private String endAlert;
     @ColumnInfo(name = "term_id")
     private int termID;
 
     // constructor
     public Courses(int ID, String courseName, String courseStartDate, String courseEndDate, String courseStatus,
-                   String ciName, String ciPhone, String ciEmail, String notes, String startAlert, String endAlert, int termID) {
+                   String ciName, String ciPhone, String ciEmail, String notes, int termID) {
         this.ID = ID;
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
@@ -47,14 +43,12 @@ public class Courses {
         this.ciPhone = ciPhone;
         this.ciEmail = ciEmail;
         this.notes = notes;
-        this.startAlert = startAlert;
-        this.endAlert = endAlert;
         this.termID = termID;
     }
 
     @Ignore
     public Courses(String courseName, String courseStartDate, String courseEndDate, String courseStatus,
-                   String ciName, String ciPhone, String ciEmail, String notes, String startAlert, String endAlert, int termID) {
+                   String ciName, String ciPhone, String ciEmail, String notes, int termID) {
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
         this.courseEndDate = courseEndDate;
@@ -63,8 +57,6 @@ public class Courses {
         this.ciPhone = ciPhone;
         this.ciEmail = ciEmail;
         this.notes = notes;
-        this.startAlert = startAlert;
-        this.endAlert = endAlert;
         this.termID = termID;
     }
 
@@ -142,22 +134,6 @@ public class Courses {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public String getStartAlert() {
-        return startAlert;
-    }
-
-    public void setStartAlert(String startAlert) {
-        this.startAlert = startAlert;
-    }
-
-    public String getEndAlert() {
-        return endAlert;
-    }
-
-    public void setEndAlert(String endAlert) {
-        this.endAlert = endAlert;
     }
 
     public int getTermID() {
