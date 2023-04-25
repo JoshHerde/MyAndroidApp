@@ -19,7 +19,7 @@ public class Courses {
     @ColumnInfo(name = "end_date")
     private String courseEndDate;
     @ColumnInfo(name = "status")
-    private String courseStatus;
+    private Status courseStatus;
     @ColumnInfo(name = "ci_name")
     private String ciName;
     @ColumnInfo(name = "ci_phone")
@@ -32,7 +32,7 @@ public class Courses {
     private int termID;
 
     // constructor
-    public Courses(int ID, String courseName, String courseStartDate, String courseEndDate, String courseStatus,
+    public Courses(int ID, String courseName, String courseStartDate, String courseEndDate, Status courseStatus,
                    String ciName, String ciPhone, String ciEmail, String notes, int termID) {
         this.ID = ID;
         this.courseName = courseName;
@@ -47,7 +47,7 @@ public class Courses {
     }
 
     @Ignore
-    public Courses(String courseName, String courseStartDate, String courseEndDate, String courseStatus,
+    public Courses(String courseName, String courseStartDate, String courseEndDate, Status courseStatus,
                    String ciName, String ciPhone, String ciEmail, String notes, int termID) {
         this.courseName = courseName;
         this.courseStartDate = courseStartDate;
@@ -96,11 +96,11 @@ public class Courses {
         this.courseEndDate = courseEndDate;
     }
 
-    public String getCourseStatus() {
+    public Status getCourseStatus() {
         return courseStatus;
     }
 
-    public void setCourseStatus(String courseStatus) {
+    public void setCourseStatus(Status courseStatus) {
         this.courseStatus = courseStatus;
     }
 

@@ -16,7 +16,7 @@ import com.example.myandroidapp.entities.Assessments;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 
-@Database(entities = {Terms.class, Courses.class, Assessments.class}, version = 10, exportSchema = false)
+@Database(entities = {Terms.class, Courses.class, Assessments.class}, version = 11, exportSchema = false)
 @TypeConverters({Converter.class})
 public abstract class AppDatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
