@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
@@ -60,6 +61,39 @@ public class CourseDetails extends AppCompatActivity {
         intentValues();
         listeners();
 
+        // Associated assessment recycler view
+        repository = new Repository(getApplication());
+        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
+        assessmentListAdapter = new AssessmentListAdapter(this);
+        recyclerView.setAdapter(assessmentListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Assessments> courseAssessments = new ArrayList<>();
+        for (Assessments assessments : repository.getAllAssessments()) {
+            if (assessments.getCourseID() == courses.getID())
+                courseAssessments.add(assessments);
+        }
+        assessmentListAdapter.setAssessments(courseAssessments);
+
+        // Term List
+        ArrayList<String> termArrayList = new ArrayList<>();
+        for (Terms t : repository.getAllTerms()) {
+            termArrayList.add(t.getTermName());
+            if (t.getID() == courses.getTermID())
+                terms = t;
+        }
+
+        // Status Spinner
+        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
+        editStatus.setAdapter(statusArrayAdapter);
+        editStatus.setSelection(statusArrayAdapter.getPosition(courses.getCourseStatus()));
+
+
+
+        // Term Spinner
+        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, termArrayList);
+        editTerm.setAdapter(termArrayAdapter);
+        if (terms != null)
+            editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));
 
 
         courseStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -77,9 +111,9 @@ public class CourseDetails extends AppCompatActivity {
         courseEndDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
+                calendarEnd.set(Calendar.YEAR, year);
+                calendarEnd.set(Calendar.MONTH, month);
+                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
 
                 sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
                 editEndDate.setText(sdf.format(calendarEnd.getTime()));
@@ -100,45 +134,32 @@ public class CourseDetails extends AppCompatActivity {
         editTerm = findViewById(R.id.termSpinner);
         editNotes = findViewById(R.id.courseNotes);
 
-        // Status Spinner
-        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
-        editStatus.setAdapter(statusArrayAdapter);
-        editStatus.setSelection(statusArrayAdapter.getPosition(courses.getCourseStatus()));
-
-        // Term List
-        ArrayList<String> termArrayList = new ArrayList<>();
-        for (Terms t : repository.getAllTerms()) {
-            termArrayList.add(t.getTermName());
-            if (t.getID() == courses.getTermID())
-                terms = t;
-        }
-
-        // Term Spinner
-        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, termArrayList);
-        editTerm.setAdapter(termArrayAdapter);
-        if (terms != null)
-            editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));
-
-
-        // Associated assessment recycler view
-        repository = new Repository(getApplication());
-        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
-        assessmentListAdapter = new AssessmentListAdapter(this);
-        recyclerView.setAdapter(assessmentListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Assessments> courseAssessments = new ArrayList<>();
-        for (Assessments assessments : repository.getAllAssessments()) {
-            if (assessments.getCourseID() == courses.getID())
-                courseAssessments.add(assessments);
-        }
-        assessmentListAdapter.setAssessments(courseAssessments);
-
 
         Button courseSaveButton = findViewById(R.id.courseSaveButton);
         courseSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                courses.setCourseName(editName.getText().toString());
+                courses.setCourseStartDate(editStartDate.getText().toString());
+                courses.setCourseEndDate(editEndDate.getText().toString());
+                courses.setCourseStatus(Status.valueOf(editStatus.getSelectedItem().toString()));
+                courses.setCiName(editCiName.getText().toString());
+                courses.setCiPhone(editCiPhone.getText().toString());
+                courses.setCiEmail(editCiEmail.getText().toString());
+                courses.setNotes(editNotes.getText().toString());
+                terms = repository.getAllTerms().get(editTerm.getSelectedItemPosition());
+                courses.setTermID(terms.getID());
 
+                if (courses.getID() == -1) {
+                    courses.setID(0);
+                    repository.insert(courses);
+                    //Toast.makeText(this, "Course is created!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    repository.update(courses);
+                    //Toast.makeText(this, "Course is updated!", Toast.LENGTH_LONG).show();
+                }
+                finish();
             }
         });
 
@@ -178,8 +199,6 @@ public class CourseDetails extends AppCompatActivity {
         editCiPhone.setText(courses.getCiPhone());
         editCiEmail.setText(courses.getCiEmail());
         editNotes.setText(courses.getNotes());
-
-        repository = new Repository(getApplication());
     }
 
     private void listeners() {
