@@ -76,6 +76,12 @@ public class CourseDetails extends AppCompatActivity {
         }
         assessmentListAdapter.setAssessments(courseAssessments);
 
+
+        // Status Spinner
+        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
+        editStatus.setAdapter(statusArrayAdapter);
+        editStatus.setSelection(statusArrayAdapter.getPosition(courses.getCourseStatus()));
+
         // Term List
         ArrayList<String> termArrayList = new ArrayList<>();
         for (Terms t : repository.getAllTerms()) {
@@ -83,13 +89,6 @@ public class CourseDetails extends AppCompatActivity {
             if (t.getID() == courses.getTermID())
                 terms = t;
         }
-
-        // Status Spinner
-        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
-        editStatus.setAdapter(statusArrayAdapter);
-        editStatus.setSelection(statusArrayAdapter.getPosition(courses.getCourseStatus()));
-
-
 
         // Term Spinner
         ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, termArrayList);
@@ -175,7 +174,6 @@ public class CourseDetails extends AppCompatActivity {
         editCiPhone.setText(courses.getCiPhone());
         editCiEmail.setText(courses.getCiEmail());
         editNotes.setText(courses.getNotes());
-
     }
 
     private void datePickers() {

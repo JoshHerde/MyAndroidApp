@@ -51,7 +51,7 @@ public class MainScreen extends AppCompatActivity {
 
         //sampleData();
     }
-/*
+
     private void sampleData() {
         Repository repository = new Repository(getApplication());
 

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
@@ -36,15 +37,16 @@ public class TermDetails extends AppCompatActivity {
     EditText editName;
     EditText editStartDate;
     EditText editEndDate;
-    DatePickerDialog.OnDateSetListener termStartDate;
-    DatePickerDialog.OnDateSetListener termEndDate;
-    Calendar calendarStart = Calendar.getInstance();
-    Calendar calendarEnd = Calendar.getInstance();
+
+    DatePickerDialog.OnDateSetListener termDPStartDate;
+    DatePickerDialog.OnDateSetListener termDPEndDate;
+    Calendar myCalendarStart = Calendar.getInstance();
+    Calendar myCalendarEnd = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
     String termName, startDate, endDate;
     int termID;
-    Terms terms;
+    Terms currentTerm;
     Repository repository;
     CourseListAdapter courseListAdapter;
 
@@ -91,12 +93,12 @@ public class TermDetails extends AppCompatActivity {
                 //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
 
                 if(termID == -1) {
-                    terms = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
-                    repository.insert(terms);
+                    currentTerm = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
+                    repository.insert(currentTerm);
                     //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
                 } else {
-                    terms = new Terms(termID, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
-                    repository.update(terms);
+                    currentTerm = new Terms(termID, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
+                    repository.update(currentTerm);
                     //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
@@ -133,40 +135,40 @@ public class TermDetails extends AppCompatActivity {
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(TermDetails.this, termStartDate, calendarStart.get(Calendar.YEAR),
-                        calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(TermDetails.this, termDPStartDate, myCalendarStart.get(Calendar.YEAR),
+                        myCalendarStart.get(Calendar.MONTH), myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        termStartDate = new DatePickerDialog.OnDateSetListener() {
+        termDPStartDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, month);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, day);
 
                 sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editStartDate.setText(sdf.format(calendarStart.getTime()));
+                editStartDate.setText(sdf.format(myCalendarStart.getTime()));
             }
         };
 
         editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(TermDetails.this, termEndDate, calendarEnd.get(Calendar.YEAR),
-                        calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(TermDetails.this, termDPEndDate, myCalendarEnd.get(Calendar.YEAR),
+                        myCalendarEnd.get(Calendar.MONTH), myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        termEndDate = new DatePickerDialog.OnDateSetListener() {
+        termDPEndDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEnd.set(Calendar.YEAR, year);
-                calendarEnd.set(Calendar.MONTH, month);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
+                myCalendarEnd.set(Calendar.YEAR, year);
+                myCalendarEnd.set(Calendar.MONTH, month);
+                myCalendarEnd.set(Calendar.DAY_OF_MONTH, day);
 
                 sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editEndDate.setText(sdf.format(calendarEnd.getTime()));
+                editEndDate.setText(sdf.format(myCalendarEnd.getTime()));
             }
         };
 
@@ -181,9 +183,26 @@ public class TermDetails extends AppCompatActivity {
 
     public boolean OnOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.termDelete:
+                for (Terms t : repository.getAllTerms()) {
+                    if (t.getID() == termID) currentTerm = t;
+                }
+
+                int associatedCourses = 0;
+                for (Courses courses : repository.getAllCourses()) {
+                    if (courses.getTermID() == termID) ++associatedCourses;
+                }
+
+                if (associatedCourses == 0) {
+                    repository.delete(currentTerm);
+                    Toast.makeText(TermDetails.this, currentTerm.getTermName() + " was deleted!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(TermDetails.this, "Cant delete a Term with associated Courses.", Toast.LENGTH_LONG).show();
+                }
+                return true;
             case R.id.termNotifyStart:
                 String startDateFromScreen = editStartDate.getText().toString();
-                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
                 Date myDate = null;
                 try {
                     myDate = sdf.parse(startDateFromScreen);
@@ -193,15 +212,16 @@ public class TermDetails extends AppCompatActivity {
                 }
                 Long trigger = myDate.getTime();
                 Intent intent = new Intent(TermDetails.this, MyReceiver.class);
-                intent.putExtra("key", startDateFromScreen + " should trigger");
+                intent.putExtra("key", "Your next term " + editName.getText().toString() + " starts today!");
                 PendingIntent sender = PendingIntent.getBroadcast(TermDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
                 return true;
-
+            case R.id.termNotifyEnd:
+                return false;
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
 

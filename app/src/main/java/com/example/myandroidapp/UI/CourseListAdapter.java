@@ -1,5 +1,6 @@
 package com.example.myandroidapp.UI;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -78,6 +79,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
     public int getItemCount() {
         return mCourses.size();
         }
+
     public void setCourses(List<Courses> courses) {
         mCourses = courses;
         notifyDataSetChanged();
