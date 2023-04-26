@@ -5,4 +5,11 @@
         android:id="@+id/termdelete"
         android:title="Delete Term" />
 
+    <item
+        android:id="@+id/termNotifyStart"
+        android:title="Notify Start Date" />
+    <item
+        android:id="@+id/termNotifyEnd"
+        android:title="Notify End Date" />
+
 </menu>

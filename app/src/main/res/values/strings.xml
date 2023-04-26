@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">My Android App</string>
+    <string name="channel_name">JoshHerdeAppChannel</string>
+    <string name="channel_description">Notifications for App</string>
+
 </resources>

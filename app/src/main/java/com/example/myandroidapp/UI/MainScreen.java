@@ -16,6 +16,8 @@ import com.example.myandroidapp.entities.Terms;
 
 public class MainScreen extends AppCompatActivity {
 
+    public static int numAlert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

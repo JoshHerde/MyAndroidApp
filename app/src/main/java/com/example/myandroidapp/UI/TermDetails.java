@@ -3,34 +3,30 @@ package com.example.myandroidapp.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Database;
 
-import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myandroidapp.Database.AppDatabaseBuilder;
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Terms;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,31 +58,9 @@ public class TermDetails extends AppCompatActivity {
 
         views();
         intentValues();
-        listeners();
+        datePickers();
 
-        termStartDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
 
-                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editStartDate.setText(sdf.format(calendarStart.getTime()));
-            }
-        };
-
-        termEndDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEnd.set(Calendar.YEAR, year);
-                calendarEnd.set(Calendar.MONTH, month);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
-
-                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editEndDate.setText(sdf.format(calendarEnd.getTime()));
-            }
-        };
     }
 
     private void views(){
@@ -140,19 +114,22 @@ public class TermDetails extends AppCompatActivity {
     }
 
     private void intentValues() {
+
         termID = getIntent().getIntExtra("ID", -1);
         termName = getIntent().getStringExtra("termName");
         startDate = getIntent().getStringExtra("startDate");
         endDate = getIntent().getStringExtra("endDate");
+
 
         editName.setText(termName);
         editStartDate.setText(startDate);
         editEndDate.setText(endDate);
 
         repository = new Repository(getApplication());
+
     }
 
-    private void listeners() {
+    private void datePickers() {
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,6 +137,18 @@ public class TermDetails extends AppCompatActivity {
                         calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        termStartDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendarStart.set(Calendar.YEAR, year);
+                calendarStart.set(Calendar.MONTH, month);
+                calendarStart.set(Calendar.DAY_OF_MONTH, day);
+
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                editStartDate.setText(sdf.format(calendarStart.getTime()));
+            }
+        };
 
         editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,26 +158,50 @@ public class TermDetails extends AppCompatActivity {
             }
         });
 
+        termEndDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendarEnd.set(Calendar.YEAR, year);
+                calendarEnd.set(Calendar.MONTH, month);
+                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
+
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                editEndDate.setText(sdf.format(calendarEnd.getTime()));
+            }
+        };
+
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_termdelete, menu);
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_term_details, menu);
         return true;
 
     }
 
-
-    public boolean OnOptionsDeleteSelected(MenuItem item) {
+    public boolean OnOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.termdelete:
-                for (Terms terms : repository.getAllTerms()) {
-                    if (terms.getID() == termID)
-                        terms = terms;
+            case R.id.termNotifyStart:
+                String startDateFromScreen = editStartDate.getText().toString();
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                Date myDate = null;
+                try {
+                    myDate = sdf.parse(startDateFromScreen);
                 }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger = myDate.getTime();
+                Intent intent = new Intent(TermDetails.this, MyReceiver.class);
+                intent.putExtra("key", startDateFromScreen + " should trigger");
+                PendingIntent sender = PendingIntent.getBroadcast(TermDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                return true;
+
         }
 
-        return true;
+        return false;
     }
 
 

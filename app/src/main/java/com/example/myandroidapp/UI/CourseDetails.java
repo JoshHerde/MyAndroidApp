@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
@@ -43,11 +44,12 @@ public class CourseDetails extends AppCompatActivity {
     Spinner editTerm;
     EditText editNotes;
 
-    DatePickerDialog.OnDateSetListener courseStartDate;
-    DatePickerDialog.OnDateSetListener courseEndDate;
-    Calendar calendarStart = Calendar.getInstance();
-    Calendar calendarEnd = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener courseDPStartDate;
+    DatePickerDialog.OnDateSetListener courseDPEndDate;
+    Calendar myCalendarStart = Calendar.getInstance();
+    Calendar myCalendarEnd = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
 
     Repository repository;
     AssessmentListAdapter assessmentListAdapter;
@@ -59,7 +61,7 @@ public class CourseDetails extends AppCompatActivity {
 
         views();
         intentValues();
-        listeners();
+        datePickers();
 
         // Associated assessment recycler view
         repository = new Repository(getApplication());
@@ -94,33 +96,6 @@ public class CourseDetails extends AppCompatActivity {
         editTerm.setAdapter(termArrayAdapter);
         if (terms != null)
             editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));
-
-
-        courseStartDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
-
-                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editStartDate.setText(sdf.format(calendarStart.getTime()));
-            }
-        };
-
-        courseEndDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEnd.set(Calendar.YEAR, year);
-                calendarEnd.set(Calendar.MONTH, month);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
-
-                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                editEndDate.setText(sdf.format(calendarEnd.getTime()));
-            }
-        };
-
-
     }
 
     private void views() {
@@ -174,6 +149,7 @@ public class CourseDetails extends AppCompatActivity {
     }
 
     private void intentValues() {
+
         try {
             courses = new Courses(
                     getIntent().getIntExtra("ID", -1),
@@ -199,25 +175,83 @@ public class CourseDetails extends AppCompatActivity {
         editCiPhone.setText(courses.getCiPhone());
         editCiEmail.setText(courses.getCiEmail());
         editNotes.setText(courses.getNotes());
+
     }
 
-    private void listeners() {
+    private void datePickers() {
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(CourseDetails.this, courseStartDate, calendarStart.get(Calendar.YEAR),
-                        calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(CourseDetails.this, courseDPStartDate, myCalendarStart.get(Calendar.YEAR),
+                        myCalendarStart.get(Calendar.MONTH), myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        courseDPStartDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, month);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, day);
+
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                editStartDate.setText(sdf.format(myCalendarStart.getTime()));
+            }
+        };
 
         editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(CourseDetails.this, courseEndDate, calendarEnd.get(Calendar.YEAR),
-                        calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(CourseDetails.this, courseDPEndDate, myCalendarEnd.get(Calendar.YEAR),
+                        myCalendarEnd.get(Calendar.MONTH), myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        courseDPEndDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                myCalendarEnd.set(Calendar.YEAR, year);
+                myCalendarEnd.set(Calendar.MONTH, month);
+                myCalendarEnd.set(Calendar.DAY_OF_MONTH, day);
+
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                editEndDate.setText(sdf.format(myCalendarEnd.getTime()));
+            }
+        };
     }
+
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_course_details, menu);
+        return true;
+    }
+
+    public boolean OnOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.courseShareNotes:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, editNotes.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
+        }
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onResume() {
