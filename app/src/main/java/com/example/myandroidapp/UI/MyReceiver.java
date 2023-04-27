@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.myandroidapp.R;
 
 public class MyReceiver extends BroadcastReceiver {
+
     String channel_id = "test";
     static int notificationID;
 

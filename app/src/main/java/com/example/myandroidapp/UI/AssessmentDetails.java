@@ -1,37 +1,31 @@
 package com.example.myandroidapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Assessments;
 import com.example.myandroidapp.entities.Courses;
-import com.example.myandroidapp.entities.Status;
-import com.example.myandroidapp.entities.Terms;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class AssessmentDetails extends AppCompatActivity {
 
-    Assessments assessments;
+    Assessments currentAssessment;
     Courses courses;
 
     EditText editName;
@@ -46,7 +40,7 @@ public class AssessmentDetails extends AppCompatActivity {
     Calendar myCalendarEnd = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
-    Repository repository;
+    Repository repository = new Repository(getApplication());
 
 
     @Override
@@ -58,18 +52,22 @@ public class AssessmentDetails extends AppCompatActivity {
         intentValues();
         datePickers();
 
-
         // Course List
         ArrayList<String> courseArrayList = new ArrayList<>();
         for (Courses c : repository.getAllCourses()) {
             courseArrayList.add(c.getCourseName());
+            if (c.getID() == currentAssessment.getCourseID());
+            courses = c;
 
         }
 
         // Course Spinner
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, courseArrayList);
         editCourse.setAdapter(courseArrayAdapter);
-        editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
+        if (courses != null) {
+            editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
+        }
+
     }
 
     private void views() {
@@ -83,7 +81,23 @@ public class AssessmentDetails extends AppCompatActivity {
         assessmentSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                currentAssessment.setAssessmentName(editName.getText().toString());
+                currentAssessment.setAssessmentType(editType.getText().toString());
+                currentAssessment.setAssessmentStartDate(editStartDate.getText().toString());
+                currentAssessment.setAssessmentEndDate(editEndDate.getText().toString());
+                courses = repository.getAllCourses().get(editCourse.getSelectedItemPosition());
+                currentAssessment.setCourseID(courses.getID());
 
+                if (currentAssessment.getID() == -1) {
+                    currentAssessment.setID(0);
+                    repository.insert(currentAssessment);
+                    //Toast.makeText(this, "Assessment was created!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    repository.update(currentAssessment);
+                    //Toast.makeText(this, "Assessment was updated!", Toast.LENGTH_LONG).show();
+                }
+                finish();
             }
         });
 
@@ -99,7 +113,7 @@ public class AssessmentDetails extends AppCompatActivity {
 
     private void intentValues() {
         try {
-            assessments = new Assessments(
+            currentAssessment = new Assessments(
                     getIntent().getIntExtra("ID", -1),
                     getIntent().getStringExtra("assessmentName"),
                     getIntent().getStringExtra("assessmentType"),
@@ -108,13 +122,13 @@ public class AssessmentDetails extends AppCompatActivity {
                     getIntent().getIntExtra("courseID", 0)
             );
         } catch (Exception e) {
-            assessments = new Assessments();
+            currentAssessment = new Assessments();
         }
 
-        editName.setText(assessments.getAssessmentName());
-        editType.setText(assessments.getAssessmentType());
-        editStartDate.setText(assessments.getAssessmentStartDate());
-        editEndDate.setText(assessments.getAssessmentEndDate());
+        editName.setText(currentAssessment.getAssessmentName());
+        editType.setText(currentAssessment.getAssessmentType());
+        editStartDate.setText(currentAssessment.getAssessmentStartDate());
+        editEndDate.setText(currentAssessment.getAssessmentEndDate());
     }
 
     private void datePickers() {

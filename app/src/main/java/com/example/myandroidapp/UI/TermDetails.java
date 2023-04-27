@@ -95,11 +95,11 @@ public class TermDetails extends AppCompatActivity {
                 if(termID == -1) {
                     currentTerm = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
                     repository.insert(currentTerm);
-                    //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Term was created!", Toast.LENGTH_LONG).show();
                 } else {
                     currentTerm = new Terms(termID, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
                     repository.update(currentTerm);
-                    //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Term was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

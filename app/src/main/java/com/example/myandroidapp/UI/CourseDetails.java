@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class CourseDetails extends AppCompatActivity {
 
-    Courses courses;
+    Courses currentCourse;
     Terms terms;
 
     EditText editName;
@@ -71,7 +71,7 @@ public class CourseDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Assessments> courseAssessments = new ArrayList<>();
         for (Assessments assessments : repository.getAllAssessments()) {
-            if (assessments.getCourseID() == courses.getID())
+            if (assessments.getCourseID() == currentCourse.getID())
                 courseAssessments.add(assessments);
         }
         assessmentListAdapter.setAssessments(courseAssessments);
@@ -80,13 +80,13 @@ public class CourseDetails extends AppCompatActivity {
         // Status Spinner
         ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
         editStatus.setAdapter(statusArrayAdapter);
-        editStatus.setSelection(statusArrayAdapter.getPosition(courses.getCourseStatus()));
+        editStatus.setSelection(statusArrayAdapter.getPosition(currentCourse.getCourseStatus()));
 
         // Term List
         ArrayList<String> termArrayList = new ArrayList<>();
         for (Terms t : repository.getAllTerms()) {
             termArrayList.add(t.getTermName());
-            if (t.getID() == courses.getTermID())
+            if (t.getID() == currentCourse.getTermID())
                 terms = t;
         }
 
@@ -113,25 +113,25 @@ public class CourseDetails extends AppCompatActivity {
         courseSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                courses.setCourseName(editName.getText().toString());
-                courses.setCourseStartDate(editStartDate.getText().toString());
-                courses.setCourseEndDate(editEndDate.getText().toString());
-                courses.setCourseStatus(Status.valueOf(editStatus.getSelectedItem().toString()));
-                courses.setCiName(editCiName.getText().toString());
-                courses.setCiPhone(editCiPhone.getText().toString());
-                courses.setCiEmail(editCiEmail.getText().toString());
-                courses.setNotes(editNotes.getText().toString());
+                currentCourse.setCourseName(editName.getText().toString());
+                currentCourse.setCourseStartDate(editStartDate.getText().toString());
+                currentCourse.setCourseEndDate(editEndDate.getText().toString());
+                currentCourse.setCourseStatus(Status.valueOf(editStatus.getSelectedItem().toString()));
+                currentCourse.setCiName(editCiName.getText().toString());
+                currentCourse.setCiPhone(editCiPhone.getText().toString());
+                currentCourse.setCiEmail(editCiEmail.getText().toString());
+                currentCourse.setNotes(editNotes.getText().toString());
                 terms = repository.getAllTerms().get(editTerm.getSelectedItemPosition());
-                courses.setTermID(terms.getID());
+                currentCourse.setTermID(terms.getID());
 
-                if (courses.getID() == -1) {
-                    courses.setID(0);
-                    repository.insert(courses);
-                    //Toast.makeText(this, "Course is created!", Toast.LENGTH_LONG).show();
+                if (currentCourse.getID() == -1) {
+                    currentCourse.setID(0);
+                    repository.insert(currentCourse);
+                    //Toast.makeText(this, "Course was created!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    repository.update(courses);
-                    //Toast.makeText(this, "Course is updated!", Toast.LENGTH_LONG).show();
+                    repository.update(currentCourse);
+                    //Toast.makeText(this, "Course was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }
@@ -150,7 +150,7 @@ public class CourseDetails extends AppCompatActivity {
     private void intentValues() {
 
         try {
-            courses = new Courses(
+            currentCourse = new Courses(
                     getIntent().getIntExtra("ID", -1),
                     getIntent().getStringExtra("courseName"),
                     getIntent().getStringExtra("courseStartDate"),
@@ -164,16 +164,16 @@ public class CourseDetails extends AppCompatActivity {
             );
         }
         catch (Exception e) {
-            courses = new Courses();
+            currentCourse = new Courses();
         }
 
-        editName.setText(courses.getCourseName());
-        editStartDate.setText(courses.getCourseStartDate());
-        editEndDate.setText(courses.getCourseEndDate());
-        editCiName.setText(courses.getCiName());
-        editCiPhone.setText(courses.getCiPhone());
-        editCiEmail.setText(courses.getCiEmail());
-        editNotes.setText(courses.getNotes());
+        editName.setText(currentCourse.getCourseName());
+        editStartDate.setText(currentCourse.getCourseStartDate());
+        editEndDate.setText(currentCourse.getCourseEndDate());
+        editCiName.setText(currentCourse.getCiName());
+        editCiPhone.setText(currentCourse.getCiPhone());
+        editCiEmail.setText(currentCourse.getCiEmail());
+        editNotes.setText(currentCourse.getNotes());
     }
 
     private void datePickers() {
@@ -260,7 +260,7 @@ public class CourseDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Assessments> courseAssessments = new ArrayList<>();
         for (Assessments assessments : repository.getAllAssessments()) {
-            if (assessments.getCourseID() == courses.getID())
+            if (assessments.getCourseID() == currentCourse.getID())
                 courseAssessments.add(assessments);
         }
         assessmentListAdapter.setAssessments(courseAssessments);
