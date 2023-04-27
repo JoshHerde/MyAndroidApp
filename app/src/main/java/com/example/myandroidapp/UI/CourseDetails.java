@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
@@ -124,14 +125,21 @@ public class CourseDetails extends AppCompatActivity {
                 terms = repository.getAllTerms().get(editTerm.getSelectedItemPosition());
                 currentCourse.setTermID(terms.getID());
 
+                if (editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("") ||
+                editStatus.getSelectedItem().toString().equals("") || editCiName.getText().toString().equals("") || editCiPhone.getText().toString().equals("") ||
+                editCiEmail.getText().toString().equals("")) {
+                    Toast.makeText(CourseDetails.this, "Fill out all above fields, notes not required.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (currentCourse.getID() == -1) {
                     currentCourse.setID(0);
                     repository.insert(currentCourse);
-                    //Toast.makeText(this, "Course was created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CourseDetails.this, "Course was created!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     repository.update(currentCourse);
-                    //Toast.makeText(this, "Course was updated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CourseDetails.this, "Course was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }
@@ -238,18 +246,6 @@ public class CourseDetails extends AppCompatActivity {
 
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     protected void onResume() {

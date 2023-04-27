@@ -89,17 +89,19 @@ public class TermDetails extends AppCompatActivity {
         termSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals(""));
-                //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("")) {
+                    Toast.makeText(TermDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if(termID == -1) {
                     currentTerm = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
                     repository.insert(currentTerm);
-                    //Toast.makeText(this, "Term was created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TermDetails.this, "Term was created!", Toast.LENGTH_LONG).show();
                 } else {
                     currentTerm = new Terms(termID, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
                     repository.update(currentTerm);
-                    //Toast.makeText(this, "Term was updated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

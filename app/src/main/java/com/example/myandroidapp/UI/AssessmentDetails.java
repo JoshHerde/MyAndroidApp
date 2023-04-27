@@ -88,14 +88,20 @@ public class AssessmentDetails extends AppCompatActivity {
                 courses = repository.getAllCourses().get(editCourse.getSelectedItemPosition());
                 currentAssessment.setCourseID(courses.getID());
 
+                if (editName.getText().toString().equals("") || editType.getText().toString().equals("") || editStartDate.getText().toString().equals("") ||
+                editEndDate.getText().toString().equals("")) {
+                    Toast.makeText(AssessmentDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (currentAssessment.getID() == -1) {
                     currentAssessment.setID(0);
                     repository.insert(currentAssessment);
-                    //Toast.makeText(this, "Assessment was created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AssessmentDetails.this, "Assessment was created!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     repository.update(currentAssessment);
-                    //Toast.makeText(this, "Assessment was updated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AssessmentDetails.this, "Assessment was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }
