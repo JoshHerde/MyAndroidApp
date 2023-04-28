@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".UI.CourseList">
 
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/courseRecyclerView"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="2dp"

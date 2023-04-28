@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".UI.TermDetails">
 
     <LinearLayout
@@ -19,6 +20,8 @@
 
         <EditText
             android:id="@+id/termName"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Term Name"
@@ -37,6 +40,8 @@
 
             <EditText
                 android:id="@+id/termStartDate"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,8 +50,21 @@
                 android:hint="Start Date"
                 android:inputType="none" />
 
+            <TextView
+                android:id="@+id/textView5"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/textColor"
+                android:layout_width="63dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
             <EditText
                 android:id="@+id/termEndDate"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -71,6 +89,7 @@
             android:id="@+id/termCancelButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#838181"
             android:text="CANCEL" />
 
 

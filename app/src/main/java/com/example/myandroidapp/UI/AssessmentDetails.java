@@ -62,6 +62,7 @@ public class AssessmentDetails extends AppCompatActivity {
         }
 
         // Course Spinner
+
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, courseArrayList);
         editCourse.setAdapter(courseArrayAdapter);
         if (courses != null) {
