@@ -2,15 +2,21 @@ package com.example.myandroidapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
@@ -18,9 +24,11 @@ import com.example.myandroidapp.R;
 import com.example.myandroidapp.entities.Assessments;
 import com.example.myandroidapp.entities.Courses;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AssessmentDetails extends AppCompatActivity {
@@ -63,7 +71,8 @@ public class AssessmentDetails extends AppCompatActivity {
 
         // Course Spinner
 
-        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, courseArrayList);
+        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, courseArrayList);
+        courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         editCourse.setAdapter(courseArrayAdapter);
         if (courses != null) {
             editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
@@ -178,5 +187,54 @@ public class AssessmentDetails extends AppCompatActivity {
                 editEndDate.setText(sdf.format(myCalendarEnd.getTime()));
             }
         };
+    }
+
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_assessment_details, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.assessmentDelete:
+                repository.delete(currentAssessment);
+                Toast.makeText(AssessmentDetails.this, currentAssessment.getAssessmentName() + " was deleted!", Toast.LENGTH_LONG).show();
+                this.finish();
+                return true;
+            case R.id.assessmentNotifyStart:
+                String startDateFromScreen = editStartDate.getText().toString();
+                Date myDate = null;
+                try {
+                    myDate = sdf.parse(startDateFromScreen);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger = myDate.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Your assessment " + editName.getText().toString() + " starts today!");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                return true;
+            case R.id.assessmentNotifyEnd:
+                String endDateFromScreen = editEndDate.getText().toString();
+                Date myDate1 = null;
+                try {
+                    myDate1 = sdf.parse(endDateFromScreen);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger1 = myDate1.getTime();
+                intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Your assessment " + editName.getText().toString() + " ends today!");
+                PendingIntent sender1 = PendingIntent.getBroadcast(AssessmentDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager1.set(AlarmManager.RTC_WAKEUP, trigger1, sender1);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

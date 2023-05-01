@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,9 +27,11 @@ import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Status;
 import com.example.myandroidapp.entities.Terms;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -79,7 +84,8 @@ public class CourseDetails extends AppCompatActivity {
 
 
         // Status Spinner
-        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
+        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, Status.values());
+        statusArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         editStatus.setAdapter(statusArrayAdapter);
         editStatus.setSelection(statusArrayAdapter.getPosition(currentCourse.getCourseStatus()));
 
@@ -92,7 +98,8 @@ public class CourseDetails extends AppCompatActivity {
         }
 
         // Term Spinner
-        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, termArrayList);
+        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, termArrayList);
+        termArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         editTerm.setAdapter(termArrayAdapter);
         if (terms != null)
             editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));
@@ -231,8 +238,13 @@ public class CourseDetails extends AppCompatActivity {
         return true;
     }
 
-    public boolean OnOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.courseDelete:
+                repository.delete(currentCourse);
+                Toast.makeText(CourseDetails.this, currentCourse.getCourseName() + " was deleted!", Toast.LENGTH_LONG).show();
+                this.finish();
+                return true;
             case R.id.courseShareNotes:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -242,9 +254,41 @@ public class CourseDetails extends AppCompatActivity {
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
                 return true;
+            case R.id.courseNotifyStart:
+                String startDateFromScreen = editStartDate.getText().toString();
+                Date myDate = null;
+                try {
+                    myDate = sdf.parse(startDateFromScreen);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger = myDate.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Your next course " + editName.getText().toString() + " starts today!");
+                PendingIntent sender = PendingIntent.getBroadcast(CourseDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                return true;
+            case R.id.courseNotifyEnd:
+                String endDateFromScreen = editEndDate.getText().toString();
+                Date myDate1 = null;
+                try {
+                    myDate1 = sdf.parse(endDateFromScreen);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger1 = myDate1.getTime();
+                intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Your course " + editName.getText().toString() + " ends today!");
+                PendingIntent sender1 = PendingIntent.getBroadcast(CourseDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager1.set(AlarmManager.RTC_WAKEUP, trigger1, sender1);
+                return true;
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

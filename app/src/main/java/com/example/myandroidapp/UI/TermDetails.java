@@ -1,5 +1,6 @@
 package com.example.myandroidapp.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -176,14 +178,13 @@ public class TermDetails extends AppCompatActivity {
 
     }
 
-
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.menu_term_details, menu);
         return true;
 
     }
 
-    public boolean OnOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case R.id.termDelete:
                 for (Terms t : repository.getAllTerms()) {
@@ -202,6 +203,7 @@ public class TermDetails extends AppCompatActivity {
                 else {
                     Toast.makeText(TermDetails.this, "Cant delete a Term with associated Courses.", Toast.LENGTH_LONG).show();
                 }
+                this.finish();
                 return true;
             case R.id.termNotifyStart:
                 String startDateFromScreen = editStartDate.getText().toString();
@@ -220,7 +222,21 @@ public class TermDetails extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
                 return true;
             case R.id.termNotifyEnd:
-                return false;
+                String endDateFromScreen = editEndDate.getText().toString();
+                Date myDate1 = null;
+                try {
+                    myDate1 = sdf.parse(endDateFromScreen);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger1 = myDate1.getTime();
+                intent = new Intent(TermDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Your term " + editName.getText().toString() + " ends today!");
+                PendingIntent sender1 = PendingIntent.getBroadcast(TermDetails.this, ++MainScreen.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager1.set(AlarmManager.RTC_WAKEUP, trigger1, sender1);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -243,32 +259,3 @@ public class TermDetails extends AppCompatActivity {
         courseListAdapter.setCourses(termCourses);
     }
 }
-
-      /*
-                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals(""))
-                    //Toast.makeText(this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
-
-                    if(termID == -1) {
-                        terms = new Terms(
-                                0,
-                                editName.getText().toString(),
-                                editStartDate.getText().toString(),
-                                editEndDate.getText().toString()
-                        );
-                        repository.insert(terms);
-                        //Toast.makeText(this, "Term is created!", Toast.LENGTH_LONG).show();
-                    } else {
-                        terms = new Terms(
-                                termID,
-                                editName.getText().toString(),
-                                editStartDate.getText().toString(),
-                                editEndDate.getText().toString()
-                        );
-                        repository.update(terms);
-                        //Toast.makeText(this, "Term is updated!", Toast.LENGTH_LONG).show();
-                    }
-                finish();
-            }
-        });
-
-        */
