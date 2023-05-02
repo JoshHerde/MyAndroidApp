@@ -63,19 +63,16 @@ public class AssessmentDetails extends AppCompatActivity {
         ArrayList<String> courseArrayList = new ArrayList<>();
         for (Courses c : repository.getAllCourses()) {
             courseArrayList.add(c.getCourseName());
-            if (c.getID() == currentAssessment.getCourseID());
+            if (c.getID() == currentAssessment.getCourseID())
             courses = c;
-
         }
 
         // Course Spinner
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, courseArrayList);
         courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
         editCourse.setAdapter(courseArrayAdapter);
-        if (courses != null) {
+        if (courses != null)
             editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
-        }
-
     }
 
     private void views() {

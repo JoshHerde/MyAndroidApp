@@ -46,7 +46,7 @@ public class TermDetails extends AppCompatActivity {
     Calendar myCalendarEnd = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
-    String termName, startDate, endDate;
+    // String termName, startDate, endDate;
     int termID;
     Terms currentTerm;
     Repository repository;
@@ -91,11 +91,25 @@ public class TermDetails extends AppCompatActivity {
         termSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                currentTerm.setTermName(editName.getText().toString());
+                currentTerm.setTermStartDate(editStartDate.getText().toString());
+                currentTerm.setTermEndDate(editEndDate.getText().toString());
+
                 if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("")) {
                     Toast.makeText(TermDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                if (currentTerm.getID() == -1) {
+                    currentTerm.setID(0);
+                    repository.insert(currentTerm);
+                    Toast.makeText(TermDetails.this, "Term was created!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    repository.update(currentTerm);
+                    Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
+                }
+/*
                 if(termID == -1) {
                     currentTerm = new Terms(0, editName.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString());
                     repository.insert(currentTerm);
@@ -105,6 +119,8 @@ public class TermDetails extends AppCompatActivity {
                     repository.update(currentTerm);
                     Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
                 }
+
+ */
                 finish();
             }
         });
@@ -121,6 +137,22 @@ public class TermDetails extends AppCompatActivity {
 
     private void intentValues() {
 
+        try {
+            currentTerm = new Terms(
+                    getIntent().getIntExtra("ID", -1),
+                    getIntent().getStringExtra("termName"),
+                    getIntent().getStringExtra("startDate"),
+                    getIntent().getStringExtra("endDate")
+            );
+        }
+        catch (Exception e) {
+            currentTerm = new Terms();
+        }
+
+        editName.setText(currentTerm.getTermName());
+        editStartDate.setText(currentTerm.getTermStartDate());
+        editEndDate.setText(currentTerm.getTermEndDate());
+/*
         termID = getIntent().getIntExtra("ID", -1);
         termName = getIntent().getStringExtra("termName");
         startDate = getIntent().getStringExtra("startDate");
@@ -132,6 +164,8 @@ public class TermDetails extends AppCompatActivity {
         editEndDate.setText(endDate);
 
         repository = new Repository(getApplication());
+
+ */
 
     }
 
@@ -188,12 +222,12 @@ public class TermDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.termDelete:
                 for (Terms t : repository.getAllTerms()) {
-                    if (t.getID() == termID) currentTerm = t;
+                    if (t.getID() == currentTerm.getID()) currentTerm = t;
                 }
 
                 int associatedCourses = 0;
                 for (Courses courses : repository.getAllCourses()) {
-                    if (courses.getTermID() == termID) ++associatedCourses;
+                    if (courses.getTermID() == currentTerm.getID()) ++associatedCourses;
                 }
 
                 if (associatedCourses == 0) {
@@ -253,7 +287,7 @@ public class TermDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Courses> termCourses = new ArrayList<>();
         for (Courses courses : repository.getAllCourses()) {
-            if (courses.getTermID() == termID)
+            if (courses.getTermID() == currentTerm.getID())
                 termCourses.add(courses);
         }
         courseListAdapter.setCourses(termCourses);
