@@ -63,21 +63,4 @@ public class MainScreen extends AppCompatActivity {
         repository.insert(new Assessments("Assessment 1", "Objective", "12/15/2022", "12/15/2022", 1));
         repository.insert(new Assessments("Assessment 2", "Objective", "12/15/2022", "12/15/2022", 1));
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.addSampleData:
-                Repository repository = new Repository(getApplication());
-                repository.insert();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
- */
 }
