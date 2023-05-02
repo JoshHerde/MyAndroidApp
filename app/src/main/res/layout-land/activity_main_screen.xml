@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".UI.MainScreen">
+
+    <Button
+        android:id="@+id/coursesButton"
+        android:layout_width="118dp"
+        android:layout_height="99dp"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="13dp"
+        android:backgroundTint="#2196F3"
+        android:text="Courses"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toEndOf="@+id/termsButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/termsButton"
+        android:layout_width="118dp"
+        android:layout_height="99dp"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="66dp"
+        android:backgroundTint="#2196F3"
+        android:text="Terms"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/assessmentsButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="118dp"
+        android:layout_height="99dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="86dp"
+        android:backgroundTint="#2196F3"
+        android:scrollbarStyle="insideOverlay"
+        android:text="Assessments"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="193dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="109dp"
+        android:text="Schedule Manager"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="132dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coursesButton"
+        app:srcCompat="@drawable/ic_baseline_schedule_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,8 +84,8 @@ public class CourseDetails extends AppCompatActivity {
 
 
         // Status Spinner
-        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, Status.values());
-        statusArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, Status.values());
+        statusArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
         editStatus.setAdapter(statusArrayAdapter);
         editStatus.setSelection(statusArrayAdapter.getPosition(currentCourse.getCourseStatus()));
 
@@ -98,8 +98,8 @@ public class CourseDetails extends AppCompatActivity {
         }
 
         // Term Spinner
-        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, termArrayList);
-        termArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, termArrayList);
+        termArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
         editTerm.setAdapter(termArrayAdapter);
         if (terms != null)
             editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));

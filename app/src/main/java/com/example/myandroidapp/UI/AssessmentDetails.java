@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
@@ -70,9 +69,8 @@ public class AssessmentDetails extends AppCompatActivity {
         }
 
         // Course Spinner
-
-        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, courseArrayList);
-        courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, courseArrayList);
+        courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
         editCourse.setAdapter(courseArrayAdapter);
         if (courses != null) {
             editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
