@@ -64,7 +64,7 @@ public class AssessmentDetails extends AppCompatActivity {
         for (Courses c : repository.getAllCourses()) {
             courseArrayList.add(c.getCourseName());
             if (c.getID() == currentAssessment.getCourseID())
-            courses = c;
+                courses = c;
         }
 
         // Course Spinner
