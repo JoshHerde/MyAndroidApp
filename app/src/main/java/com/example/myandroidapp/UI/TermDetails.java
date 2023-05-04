@@ -185,8 +185,8 @@ public class TermDetails extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.termDelete:
-                for (Terms t : repository.getAllTerms()) {
-                    if (t.getID() == currentTerm.getID()) currentTerm = t;
+                for (Terms terms : repository.getAllTerms()) {
+                    if (terms.getID() == currentTerm.getID()) currentTerm = terms;
                 }
 
                 int associatedCourses = 0;

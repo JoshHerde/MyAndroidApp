@@ -124,10 +124,10 @@ public class AssessmentDetails extends AppCompatActivity {
 
         // Course List
         ArrayList<String> courseArrayList = new ArrayList<>();
-        for (Courses c : repository.getAllCourses()) {
-            courseArrayList.add(c.getCourseName());
-            if (c.getID() == currentAssessment.getCourseID())
-                courses = c;
+        for (Courses cList : repository.getAllCourses()) {
+            courseArrayList.add(cList.getCourseName());
+            if (cList.getID() == currentAssessment.getCourseID())
+                courses = cList;
         }
 
         // Course Spinner

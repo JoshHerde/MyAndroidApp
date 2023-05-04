@@ -171,10 +171,10 @@ public class CourseDetails extends AppCompatActivity {
 
         // Term List
         ArrayList<String> termArrayList = new ArrayList<>();
-        for (Terms t : repository.getAllTerms()) {
-            termArrayList.add(t.getTermName());
-            if (t.getID() == currentCourse.getTermID())
-                terms = t;
+        for (Terms tList : repository.getAllTerms()) {
+            termArrayList.add(tList.getTermName());
+            if (tList.getID() == currentCourse.getTermID())
+                terms = tList;
         }
 
         // Term Spinner
