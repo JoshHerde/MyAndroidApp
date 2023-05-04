@@ -55,33 +55,14 @@ public class AssessmentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_details);
 
-        views();
-        intentValues();
-        datePickers();
-
-        // Course List
-        ArrayList<String> courseArrayList = new ArrayList<>();
-        for (Courses c : repository.getAllCourses()) {
-            courseArrayList.add(c.getCourseName());
-            if (c.getID() == currentAssessment.getCourseID())
-                courses = c;
-        }
-
-        // Course Spinner
-        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, courseArrayList);
-        courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
-        editCourse.setAdapter(courseArrayAdapter);
-        if (courses != null)
-            editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
-    }
-
-    private void views() {
+        // Layout
         editName = findViewById(R.id.assessmentName);
         editType = findViewById(R.id.assessmentType);
         editStartDate = findViewById(R.id.assessmentStartDate);
         editEndDate = findViewById(R.id.assessmentEndDate);
         editCourse = findViewById(R.id.courseSpinner);
 
+        // Save Button
         Button assessmentSaveButton = findViewById(R.id.assessmentSaveButton);
         assessmentSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +75,7 @@ public class AssessmentDetails extends AppCompatActivity {
                 currentAssessment.setCourseID(courses.getID());
 
                 if (editName.getText().toString().equals("") || editType.getText().toString().equals("") || editStartDate.getText().toString().equals("") ||
-                editEndDate.getText().toString().equals("")) {
+                        editEndDate.getText().toString().equals("")) {
                     Toast.makeText(AssessmentDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -103,8 +84,7 @@ public class AssessmentDetails extends AppCompatActivity {
                     currentAssessment.setID(0);
                     repository.insert(currentAssessment);
                     Toast.makeText(AssessmentDetails.this, "Assessment was created!", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     repository.update(currentAssessment);
                     Toast.makeText(AssessmentDetails.this, "Assessment was updated!", Toast.LENGTH_LONG).show();
                 }
@@ -112,6 +92,7 @@ public class AssessmentDetails extends AppCompatActivity {
             }
         });
 
+        // Cancel Button
         Button assessmentCancelButton = findViewById(R.id.assessmentCancelButton);
         assessmentCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,9 +101,9 @@ public class AssessmentDetails extends AppCompatActivity {
                 AssessmentDetails.this.startActivity(intent);
             }
         });
-    }
 
-    private void intentValues() {
+
+        // Intent values
         try {
             currentAssessment = new Assessments(
                     getIntent().getIntExtra("ID", -1),
@@ -140,9 +121,24 @@ public class AssessmentDetails extends AppCompatActivity {
         editType.setText(currentAssessment.getAssessmentType());
         editStartDate.setText(currentAssessment.getAssessmentStartDate());
         editEndDate.setText(currentAssessment.getAssessmentEndDate());
-    }
 
-    private void datePickers() {
+        // Course List
+        ArrayList<String> courseArrayList = new ArrayList<>();
+        for (Courses c : repository.getAllCourses()) {
+            courseArrayList.add(c.getCourseName());
+            if (c.getID() == currentAssessment.getCourseID())
+                courses = c;
+        }
+
+        // Course Spinner
+        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, courseArrayList);
+        courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
+        editCourse.setAdapter(courseArrayAdapter);
+        if (courses != null)
+            editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
+
+
+        // Date pickers
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,12 +180,14 @@ public class AssessmentDetails extends AppCompatActivity {
         };
     }
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+    // Menu
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_assessment_details, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected (MenuItem item) {
+    // Menu items
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.assessmentDelete:
                 repository.delete(currentAssessment);
@@ -201,8 +199,7 @@ public class AssessmentDetails extends AppCompatActivity {
                 Date myDate = null;
                 try {
                     myDate = sdf.parse(startDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger = myDate.getTime();
@@ -217,8 +214,7 @@ public class AssessmentDetails extends AppCompatActivity {
                 Date myDate1 = null;
                 try {
                     myDate1 = sdf.parse(endDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger1 = myDate1.getTime();

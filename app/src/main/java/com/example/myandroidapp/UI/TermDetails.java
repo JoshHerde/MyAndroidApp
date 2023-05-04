@@ -46,7 +46,6 @@ public class TermDetails extends AppCompatActivity {
     Calendar myCalendarEnd = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
-    // String termName, startDate, endDate;
     int termID;
     Terms currentTerm;
     Repository repository;
@@ -59,19 +58,64 @@ public class TermDetails extends AppCompatActivity {
         setContentView(R.layout.activity_term_details);
 
 
-
-        views();
-        intentValues();
-        datePickers();
-
-
-    }
-
-    private void views(){
+        // Layout
         editName = findViewById(R.id.termName);
         editStartDate = findViewById(R.id.termStartDate);
         editEndDate = findViewById(R.id.termEndDate);
 
+
+        // Save Button
+        Button termSaveButton = findViewById(R.id.termSaveButton);
+        termSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentTerm.setTermName(editName.getText().toString());
+                currentTerm.setTermStartDate(editStartDate.getText().toString());
+                currentTerm.setTermEndDate(editEndDate.getText().toString());
+
+                if (editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("")) {
+                    Toast.makeText(TermDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (currentTerm.getID() == -1) {
+                    currentTerm.setID(0);
+                    repository.insert(currentTerm);
+                    Toast.makeText(TermDetails.this, "Term was created!", Toast.LENGTH_LONG).show();
+                } else {
+                    repository.update(currentTerm);
+                    Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
+                }
+                finish();
+            }
+        });
+
+        // Cancel Button
+        Button termCancelButton = findViewById(R.id.termCancelButton);
+        termCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TermDetails.this, TermList.class);
+                TermDetails.this.startActivity(intent);
+            }
+        });
+
+
+        // Intent values
+        try {
+            currentTerm = new Terms(
+                    getIntent().getIntExtra("ID", -1),
+                    getIntent().getStringExtra("termName"),
+                    getIntent().getStringExtra("startDate"),
+                    getIntent().getStringExtra("endDate")
+            );
+        } catch (Exception e) {
+            currentTerm = new Terms();
+        }
+
+        editName.setText(currentTerm.getTermName());
+        editStartDate.setText(currentTerm.getTermStartDate());
+        editEndDate.setText(currentTerm.getTermEndDate());
 
         // Associated Courses Recycler View
         repository = new Repository(getApplication());
@@ -86,64 +130,8 @@ public class TermDetails extends AppCompatActivity {
         }
         courseListAdapter.setCourses(termCourses);
 
-        // Save Button
-        Button termSaveButton = findViewById(R.id.termSaveButton);
-        termSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentTerm.setTermName(editName.getText().toString());
-                currentTerm.setTermStartDate(editStartDate.getText().toString());
-                currentTerm.setTermEndDate(editEndDate.getText().toString());
 
-                if(editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("")) {
-                    Toast.makeText(TermDetails.this, "Fill out all above fields.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (currentTerm.getID() == -1) {
-                    currentTerm.setID(0);
-                    repository.insert(currentTerm);
-                    Toast.makeText(TermDetails.this, "Term was created!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    repository.update(currentTerm);
-                    Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
-                }
-                finish();
-            }
-        });
-
-        Button termCancelButton = findViewById(R.id.termCancelButton);
-        termCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TermDetails.this, TermList.class);
-                TermDetails.this.startActivity(intent);
-            }
-        });
-    }
-
-    private void intentValues() {
-
-        try {
-            currentTerm = new Terms(
-                    getIntent().getIntExtra("ID", -1),
-                    getIntent().getStringExtra("termName"),
-                    getIntent().getStringExtra("startDate"),
-                    getIntent().getStringExtra("endDate")
-            );
-        }
-        catch (Exception e) {
-            currentTerm = new Terms();
-        }
-
-        editName.setText(currentTerm.getTermName());
-        editStartDate.setText(currentTerm.getTermStartDate());
-        editEndDate.setText(currentTerm.getTermEndDate());
-
-    }
-
-    private void datePickers() {
+        // Date pickers
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,16 +171,18 @@ public class TermDetails extends AppCompatActivity {
                 editEndDate.setText(sdf.format(myCalendarEnd.getTime()));
             }
         };
-
     }
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+    // Menu
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_term_details, menu);
         return true;
 
     }
 
-    public boolean onOptionsItemSelected (MenuItem item) {
+
+    // Menu items
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.termDelete:
                 for (Terms t : repository.getAllTerms()) {
@@ -207,8 +197,7 @@ public class TermDetails extends AppCompatActivity {
                 if (associatedCourses == 0) {
                     repository.delete(currentTerm);
                     Toast.makeText(TermDetails.this, currentTerm.getTermName() + " was deleted!", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     Toast.makeText(TermDetails.this, "Cant delete a Term with associated Courses.", Toast.LENGTH_LONG).show();
                 }
                 this.finish();
@@ -218,8 +207,7 @@ public class TermDetails extends AppCompatActivity {
                 Date myDate = null;
                 try {
                     myDate = sdf.parse(startDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger = myDate.getTime();
@@ -234,8 +222,7 @@ public class TermDetails extends AppCompatActivity {
                 Date myDate1 = null;
                 try {
                     myDate1 = sdf.parse(endDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger1 = myDate1.getTime();
@@ -249,7 +236,6 @@ public class TermDetails extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

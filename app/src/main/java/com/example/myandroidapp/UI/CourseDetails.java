@@ -65,9 +65,90 @@ public class CourseDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
 
-        views();
-        intentValues();
-        datePickers();
+
+
+        // layout
+        editName = findViewById(R.id.courseName);
+        editStartDate = findViewById(R.id.courseStartDate);
+        editEndDate = findViewById(R.id.courseEndDate);
+        editStatus = findViewById(R.id.courseStatusSpinner);
+        editCiName = findViewById(R.id.ciName);
+        editCiPhone = findViewById(R.id.ciPhone);
+        editCiEmail = findViewById(R.id.ciEmail);
+        editTerm = findViewById(R.id.termSpinner);
+        editNotes = findViewById(R.id.courseNotes);
+
+        // Save button
+        Button courseSaveButton = findViewById(R.id.courseSaveButton);
+        courseSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentCourse.setCourseName(editName.getText().toString());
+                currentCourse.setCourseStartDate(editStartDate.getText().toString());
+                currentCourse.setCourseEndDate(editEndDate.getText().toString());
+                currentCourse.setCourseStatus(Status.valueOf(editStatus.getSelectedItem().toString()));
+                currentCourse.setCiName(editCiName.getText().toString());
+                currentCourse.setCiPhone(editCiPhone.getText().toString());
+                currentCourse.setCiEmail(editCiEmail.getText().toString());
+                currentCourse.setNotes(editNotes.getText().toString());
+                terms = repository.getAllTerms().get(editTerm.getSelectedItemPosition());
+                currentCourse.setTermID(terms.getID());
+
+                if (editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("") ||
+                        editStatus.getSelectedItem().toString().equals("") || editCiName.getText().toString().equals("") || editCiPhone.getText().toString().equals("") ||
+                        editCiEmail.getText().toString().equals("")) {
+                    Toast.makeText(CourseDetails.this, "Fill out all above fields, notes not required.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (currentCourse.getID() == -1) {
+                    currentCourse.setID(0);
+                    repository.insert(currentCourse);
+                    Toast.makeText(CourseDetails.this, "Course was created!", Toast.LENGTH_LONG).show();
+                } else {
+                    repository.update(currentCourse);
+                    Toast.makeText(CourseDetails.this, "Course was updated!", Toast.LENGTH_LONG).show();
+                }
+                finish();
+            }
+        });
+
+        // Cancel Button
+        Button courseCancelButton = findViewById(R.id.courseCancelButton);
+        courseCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CourseDetails.this, CourseList.class);
+                CourseDetails.this.startActivity(intent);
+            }
+        });
+
+
+        // Intent values
+        try {
+            currentCourse = new Courses(
+                    getIntent().getIntExtra("ID", -1),
+                    getIntent().getStringExtra("courseName"),
+                    getIntent().getStringExtra("courseStartDate"),
+                    getIntent().getStringExtra("courseEndDate"),
+                    (Status) getIntent().getSerializableExtra("courseStatus"),
+                    getIntent().getStringExtra("ciName"),
+                    getIntent().getStringExtra("ciPhone"),
+                    getIntent().getStringExtra("ciEmail"),
+                    getIntent().getStringExtra("notes"),
+                    getIntent().getIntExtra("termID", 0)
+            );
+        } catch (Exception e) {
+            currentCourse = new Courses();
+        }
+
+        editName.setText(currentCourse.getCourseName());
+        editStartDate.setText(currentCourse.getCourseStartDate());
+        editEndDate.setText(currentCourse.getCourseEndDate());
+        editCiName.setText(currentCourse.getCiName());
+        editCiPhone.setText(currentCourse.getCiPhone());
+        editCiEmail.setText(currentCourse.getCiEmail());
+        editNotes.setText(currentCourse.getNotes());
 
         // Associated assessment recycler view
         repository = new Repository(getApplication());
@@ -81,7 +162,6 @@ public class CourseDetails extends AppCompatActivity {
                 courseAssessments.add(assessments);
         }
         assessmentListAdapter.setAssessments(courseAssessments);
-
 
         // Status Spinner
         ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, Status.values());
@@ -103,95 +183,9 @@ public class CourseDetails extends AppCompatActivity {
         editTerm.setAdapter(termArrayAdapter);
         if (terms != null)
             editTerm.setSelection(termArrayAdapter.getPosition(terms.getTermName()));
-    }
-
-    private void views() {
-        editName = findViewById(R.id.courseName);
-        editStartDate = findViewById(R.id.courseStartDate);
-        editEndDate = findViewById(R.id.courseEndDate);
-        editStatus = findViewById(R.id.courseStatusSpinner);
-        editCiName = findViewById(R.id.ciName);
-        editCiPhone = findViewById(R.id.ciPhone);
-        editCiEmail = findViewById(R.id.ciEmail);
-        editTerm = findViewById(R.id.termSpinner);
-        editNotes = findViewById(R.id.courseNotes);
 
 
-        Button courseSaveButton = findViewById(R.id.courseSaveButton);
-        courseSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentCourse.setCourseName(editName.getText().toString());
-                currentCourse.setCourseStartDate(editStartDate.getText().toString());
-                currentCourse.setCourseEndDate(editEndDate.getText().toString());
-                currentCourse.setCourseStatus(Status.valueOf(editStatus.getSelectedItem().toString()));
-                currentCourse.setCiName(editCiName.getText().toString());
-                currentCourse.setCiPhone(editCiPhone.getText().toString());
-                currentCourse.setCiEmail(editCiEmail.getText().toString());
-                currentCourse.setNotes(editNotes.getText().toString());
-                terms = repository.getAllTerms().get(editTerm.getSelectedItemPosition());
-                currentCourse.setTermID(terms.getID());
-
-                if (editName.getText().toString().equals("") || editStartDate.getText().toString().equals("") || editEndDate.getText().toString().equals("") ||
-                editStatus.getSelectedItem().toString().equals("") || editCiName.getText().toString().equals("") || editCiPhone.getText().toString().equals("") ||
-                editCiEmail.getText().toString().equals("")) {
-                    Toast.makeText(CourseDetails.this, "Fill out all above fields, notes not required.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (currentCourse.getID() == -1) {
-                    currentCourse.setID(0);
-                    repository.insert(currentCourse);
-                    Toast.makeText(CourseDetails.this, "Course was created!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    repository.update(currentCourse);
-                    Toast.makeText(CourseDetails.this, "Course was updated!", Toast.LENGTH_LONG).show();
-                }
-                finish();
-            }
-        });
-
-        Button courseCancelButton = findViewById(R.id.courseCancelButton);
-        courseCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CourseDetails.this, CourseList.class);
-                CourseDetails.this.startActivity(intent);
-            }
-        });
-    }
-
-    private void intentValues() {
-
-        try {
-            currentCourse = new Courses(
-                    getIntent().getIntExtra("ID", -1),
-                    getIntent().getStringExtra("courseName"),
-                    getIntent().getStringExtra("courseStartDate"),
-                    getIntent().getStringExtra("courseEndDate"),
-                    (Status) getIntent().getSerializableExtra("courseStatus"),
-                    getIntent().getStringExtra("ciName"),
-                    getIntent().getStringExtra("ciPhone"),
-                    getIntent().getStringExtra("ciEmail"),
-                    getIntent().getStringExtra("notes"),
-                    getIntent().getIntExtra("termID", 0)
-            );
-        }
-        catch (Exception e) {
-            currentCourse = new Courses();
-        }
-
-        editName.setText(currentCourse.getCourseName());
-        editStartDate.setText(currentCourse.getCourseStartDate());
-        editEndDate.setText(currentCourse.getCourseEndDate());
-        editCiName.setText(currentCourse.getCiName());
-        editCiPhone.setText(currentCourse.getCiPhone());
-        editCiEmail.setText(currentCourse.getCiEmail());
-        editNotes.setText(currentCourse.getNotes());
-    }
-
-    private void datePickers() {
+        // Date pickers
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,12 +227,14 @@ public class CourseDetails extends AppCompatActivity {
         };
     }
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+    // Menu
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_course_details, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected (MenuItem item) {
+    // Menu items
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.courseDelete:
                 repository.delete(currentCourse);
@@ -259,8 +255,7 @@ public class CourseDetails extends AppCompatActivity {
                 Date myDate = null;
                 try {
                     myDate = sdf.parse(startDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger = myDate.getTime();
@@ -275,8 +270,7 @@ public class CourseDetails extends AppCompatActivity {
                 Date myDate1 = null;
                 try {
                     myDate1 = sdf.parse(endDateFromScreen);
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Long trigger1 = myDate1.getTime();
