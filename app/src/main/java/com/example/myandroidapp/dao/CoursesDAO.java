@@ -25,12 +25,6 @@ public interface CoursesDAO {
     @Query("SELECT * FROM courses ORDER BY ID ASC")
     List<Courses> getAllCourses();
 
-    @Query("SELECT COUNT(*) FROM courses")
-    int getCount();
-
-    @Query("SELECT * FROM courses WHERE ID = :courseID")
-    Courses getCourseByID(int courseID);
-
     @Query("SELECT * FROM courses WHERE term_id = :termID")
-    List<Courses> getCourseByTerm(int termID);
+    List<Courses> getAllAssociatedCourses(int termID);
 }

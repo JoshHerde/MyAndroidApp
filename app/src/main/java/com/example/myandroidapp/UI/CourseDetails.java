@@ -22,11 +22,13 @@ import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
+import com.example.myandroidapp.dao.AssessmentsDAO;
 import com.example.myandroidapp.entities.Assessments;
 import com.example.myandroidapp.entities.Courses;
 import com.example.myandroidapp.entities.Status;
 import com.example.myandroidapp.entities.Terms;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -150,6 +152,7 @@ public class CourseDetails extends AppCompatActivity {
         editCiEmail.setText(currentCourse.getCiEmail());
         editNotes.setText(currentCourse.getNotes());
 
+
         // Associated assessment recycler view
         repository = new Repository(getApplication());
         RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
@@ -161,7 +164,9 @@ public class CourseDetails extends AppCompatActivity {
             if (assessments.getCourseID() == currentCourse.getID())
                 courseAssessments.add(assessments);
         }
+
         assessmentListAdapter.setAssessments(courseAssessments);
+
 
         // Status Spinner
         ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, Status.values());
