@@ -144,6 +144,7 @@ public class CourseDetails extends AppCompatActivity {
             currentCourse = new Courses();
         }
 
+        // Set values
         editName.setText(currentCourse.getCourseName());
         editStartDate.setText(currentCourse.getCourseStartDate());
         editEndDate.setText(currentCourse.getCourseEndDate());

@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.myandroidapp.Database.Repository;
 import com.example.myandroidapp.R;
@@ -26,7 +29,7 @@ public class MainScreen extends AppCompatActivity {
         termsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( MainScreen.this, TermList.class);
+                Intent intent = new Intent(MainScreen.this, TermList.class);
                 MainScreen.this.startActivity(intent);
             }
         });
@@ -49,18 +52,17 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        //sampleData();
+        //addsSampleData();
     }
 
-    private void sampleData() {
+    private void addSampleData() {
         Repository repository = new Repository(getApplication());
 
         repository.insert(new Terms("Term 1", "10/10/2022", "03/10/2023"));
-        repository.insert(new Terms("Term 2", "03/15/2023", "09/15/2023"));
 
         repository.insert(new Courses("C196", "10/10/2022", "12/15/2022", Status.Completed, "Josh Herde", "111-111-1111", "jherde@wgu.edu", "test", 1));
 
         repository.insert(new Assessments("Assessment 1", "Objective", "12/15/2022", "12/15/2022", 1));
-        repository.insert(new Assessments("Assessment 2", "Objective", "12/15/2022", "12/15/2022", 1));
+
     }
 }

@@ -113,6 +113,7 @@ public class TermDetails extends AppCompatActivity {
             currentTerm = new Terms();
         }
 
+        // Set Values
         editName.setText(currentTerm.getTermName());
         editStartDate.setText(currentTerm.getTermStartDate());
         editEndDate.setText(currentTerm.getTermEndDate());

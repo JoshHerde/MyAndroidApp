@@ -117,6 +117,7 @@ public class AssessmentDetails extends AppCompatActivity {
             currentAssessment = new Assessments();
         }
 
+        // Set values
         editName.setText(currentAssessment.getAssessmentName());
         editType.setText(currentAssessment.getAssessmentType());
         editStartDate.setText(currentAssessment.getAssessmentStartDate());
