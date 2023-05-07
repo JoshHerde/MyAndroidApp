@@ -18,6 +18,8 @@
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/termEndDate"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +28,7 @@
         android:id="@+id/termStartDate"
         android:layout_width="332dp"
         android:layout_height="48dp"
+        android:layout_marginTop="7dp"
         android:layout_weight="1"
         android:autofillHints="Start Date"
         android:ems="10"
@@ -69,13 +72,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/courseRecyclerViewForTerm"
-        android:layout_width="760dp"
-        android:layout_height="147dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toTopOf="@+id/termSaveButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Button
@@ -99,13 +101,12 @@
         android:id="@+id/textView9"
         android:layout_width="161dp"
         android:layout_height="29dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="609dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="593dp"
         android:text="Associated Courses:"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/courseRecyclerViewForTerm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/termStartDate" />
