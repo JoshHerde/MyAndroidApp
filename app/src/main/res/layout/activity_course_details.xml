@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="Course Name"
+                android:textAlignment="center"
                 android:ems="10"
                 android:hint="Course Name"
                 android:inputType="text" />
@@ -126,24 +127,6 @@
                 android:hint="Instructor Email"
                 android:inputType="textEmailAddress" />
 
-            <Spinner
-                android:id="@+id/termSpinner"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/textColor"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/textColor" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/assessmentRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="138dp" />
-
             <EditText
                 android:id="@+id/courseNotes"
                 android:textColor="@color/textColor"
@@ -155,6 +138,34 @@
                 android:gravity="start|top"
                 android:hint="Notes:"
                 android:inputType="textMultiLine" />
+
+            <Spinner
+                android:id="@+id/termSpinner"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/textColor"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/textColor" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Associated Assessments:"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/textColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/assessmentRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="138dp" />
+
+
 
             <Button
                 android:id="@+id/courseSaveButton"

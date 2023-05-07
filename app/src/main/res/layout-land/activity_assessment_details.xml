@@ -34,6 +34,7 @@
                 android:autofillHints="Assessment Name"
                 android:ems="10"
                 android:hint="Assessment Name"
+                android:textAlignment="center"
                 android:inputType="text"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/textColor" />

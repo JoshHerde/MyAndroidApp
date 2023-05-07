@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints="Term Name"
                 android:hint="Term Name"
+                android:textAlignment="center"
                 android:inputType="text"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/textColor" />
