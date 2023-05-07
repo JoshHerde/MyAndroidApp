@@ -7,7 +7,7 @@
     android:background="@color/backgroundColor"
     tools:context=".UI.AssessmentDetails">
 
-    
+
     <EditText
         android:id="@+id/assessmentName"
         android:layout_width="match_parent"
@@ -20,6 +20,8 @@
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentStartDate"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,6 +44,8 @@
         android:id="@+id/assessmentStartDate"
         android:layout_width="173dp"
         android:layout_height="51dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="54dp"
         android:layout_weight="1"
         android:autofillHints="Start Date"
         android:ems="10"
@@ -49,6 +53,8 @@
         android:inputType="none"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentType"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/assessmentName" />
 
@@ -58,12 +64,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="70dp"
         android:layout_weight="1"
         android:text="-"
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentType"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentEndDate"
         app:layout_constraintStart_toEndOf="@+id/assessmentStartDate"
         app:layout_constraintTop_toBottomOf="@+id/assessmentName" />
 
@@ -71,7 +80,9 @@
         android:id="@+id/assessmentEndDate"
         android:layout_width="173dp"
         android:layout_height="51dp"
+        android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginBottom="54dp"
         android:layout_weight="1"
         android:autofillHints="End Date"
         android:ems="10"
@@ -79,13 +90,16 @@
         android:inputType="none"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentType"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/assessmentName" />
 
     <Spinner
         android:id="@+id/courseSpinner"
         android:layout_width="295dp"
         android:layout_height="41dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="333dp"
@@ -94,6 +108,7 @@
         android:textColorHint="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/assessmentSaveButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/assessmentType" />
 
     <Button
@@ -120,11 +135,13 @@
         android:layout_height="42dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="332dp"
         android:text="Courses:"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/assessmentSaveButton"
+        app:layout_constraintEnd_toStartOf="@+id/courseSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/assessmentType" />
 
