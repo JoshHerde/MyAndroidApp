@@ -81,10 +81,10 @@ public class TermDetails extends AppCompatActivity {
                 if (currentTerm.getID() == -1) {
                     currentTerm.setID(0);
                     repository.insert(currentTerm);
-                    Toast.makeText(TermDetails.this, "Term was created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TermDetails.this, editName.getText().toString() + " was created!", Toast.LENGTH_LONG).show();
                 } else {
                     repository.update(currentTerm);
-                    Toast.makeText(TermDetails.this, "Term was updated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TermDetails.this, editName.getText().toString() + " was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

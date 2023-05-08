@@ -83,10 +83,10 @@ public class AssessmentDetails extends AppCompatActivity {
                 if (currentAssessment.getID() == -1) {
                     currentAssessment.setID(0);
                     repository.insert(currentAssessment);
-                    Toast.makeText(AssessmentDetails.this, "Assessment was created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AssessmentDetails.this, editName.getText().toString() + " was created!", Toast.LENGTH_LONG).show();
                 } else {
                     repository.update(currentAssessment);
-                    Toast.makeText(AssessmentDetails.this, "Assessment was updated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AssessmentDetails.this, editName.getText().toString() + " was updated!", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

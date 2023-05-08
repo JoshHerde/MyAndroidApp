@@ -52,7 +52,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        //addsSampleData();
+        //addSampleData();
     }
 
     private void addSampleData() {
