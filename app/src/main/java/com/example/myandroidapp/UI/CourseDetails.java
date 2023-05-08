@@ -123,20 +123,6 @@ public class CourseDetails extends AppCompatActivity {
             }
         });
 
-        // Associated assessment recycler view
-        repository = new Repository(getApplication());
-        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
-        assessmentListAdapter = new AssessmentListAdapter(this);
-        recyclerView.setAdapter(assessmentListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Assessments> courseAssessments = new ArrayList<>();
-        for (Assessments assessments : repository.getAllAssessments()) {
-            if (assessments.getCourseID() == currentCourse.getID())
-                courseAssessments.add(assessments);
-        }
-
-        assessmentListAdapter.setAssessments(courseAssessments);
-
 
         // Intent values
         try {
@@ -155,6 +141,19 @@ public class CourseDetails extends AppCompatActivity {
         } catch (Exception e) {
             currentCourse = new Courses();
         }
+
+        // Associated assessment recycler view
+        repository = new Repository(getApplication());
+        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
+        assessmentListAdapter = new AssessmentListAdapter(this);
+        recyclerView.setAdapter(assessmentListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Assessments> courseAssessments = new ArrayList<>();
+        for (Assessments assessments : repository.getAllAssessments()) {
+            if (assessments.getCourseID() == currentCourse.getID())
+                courseAssessments.add(assessments);
+        }
+        assessmentListAdapter.setAssessments(courseAssessments);
 
         // Status Spinner
         ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, Status.values());

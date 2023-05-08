@@ -113,11 +113,6 @@ public class TermDetails extends AppCompatActivity {
             currentTerm = new Terms();
         }
 
-        // Set Values
-        editName.setText(currentTerm.getTermName());
-        editStartDate.setText(currentTerm.getTermStartDate());
-        editEndDate.setText(currentTerm.getTermEndDate());
-
         // Associated Courses Recycler View
         repository = new Repository(getApplication());
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerViewForTerm);
@@ -130,6 +125,11 @@ public class TermDetails extends AppCompatActivity {
                 termCourses.add(courses);
         }
         courseListAdapter.setCourses(termCourses);
+
+        // Set Values
+        editName.setText(currentTerm.getTermName());
+        editStartDate.setText(currentTerm.getTermStartDate());
+        editEndDate.setText(currentTerm.getTermEndDate());
 
 
         // Date pickers

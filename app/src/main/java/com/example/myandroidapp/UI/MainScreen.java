@@ -21,11 +21,17 @@ public class MainScreen extends AppCompatActivity {
 
     public static int numAlert;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         Button termsButton = findViewById(R.id.termsButton);
+        /*
+        Terms terms = new Terms("Term Test", "10/10/2022", "03/10/2023");
+        Repository repository = new Repository(getApplication());
+        repository.insert(terms);
+         */
         termsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,18 +57,5 @@ public class MainScreen extends AppCompatActivity {
                 MainScreen.this.startActivity(intent);
             }
         });
-
-        //addSampleData();
-    }
-
-    private void addSampleData() {
-        Repository repository = new Repository(getApplication());
-
-        repository.insert(new Terms("Term 1", "10/10/2022", "03/10/2023"));
-
-        repository.insert(new Courses("C196", "10/10/2022", "12/15/2022", Status.Completed, "Josh Herde", "111-111-1111", "jherde@wgu.edu", "test", 1));
-
-        repository.insert(new Assessments("Assessment 1", "Objective", "12/15/2022", "12/15/2022", 1));
-
     }
 }

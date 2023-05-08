@@ -117,12 +117,6 @@ public class AssessmentDetails extends AppCompatActivity {
             currentAssessment = new Assessments();
         }
 
-        // Set values
-        editName.setText(currentAssessment.getAssessmentName());
-        editType.setText(currentAssessment.getAssessmentType());
-        editStartDate.setText(currentAssessment.getAssessmentStartDate());
-        editEndDate.setText(currentAssessment.getAssessmentEndDate());
-
         // Course List
         ArrayList<String> courseArrayList = new ArrayList<>();
         for (Courses cList : repository.getAllCourses()) {
@@ -135,6 +129,12 @@ public class AssessmentDetails extends AppCompatActivity {
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_selected_item, courseArrayList);
         courseArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_items);
         editCourse.setAdapter(courseArrayAdapter);
+
+        // Set values
+        editName.setText(currentAssessment.getAssessmentName());
+        editType.setText(currentAssessment.getAssessmentType());
+        editStartDate.setText(currentAssessment.getAssessmentStartDate());
+        editEndDate.setText(currentAssessment.getAssessmentEndDate());
         if (courses != null)
             editCourse.setSelection(courseArrayAdapter.getPosition(courses.getCourseName()));
 
